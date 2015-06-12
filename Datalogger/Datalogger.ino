@@ -83,6 +83,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  Serial.println("Putting data into dataString");
   dataString += "averageValue1";
   dataString += ",";
   dataString += "averageValue2";
@@ -91,6 +92,8 @@ void loop() {
   dataString += ",";
   dataString += "averageValue4";
   dataString += ",";
+  Serial.println("Finished putting data into dataString.");
+  Serial.println(dataString);
   zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
@@ -125,6 +128,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  Serial.println("Putting data into dataString");
   dataString += "averageValue1";
   dataString += ",";
   dataString += "averageValue2";
@@ -133,6 +137,8 @@ void loop() {
   dataString += ",";
   dataString += "averageValue4";
   dataString += ",";
+  Serial.println("Finished putting data into dataString.");
+  Serial.println(dataString);
 
   //inner
   Serial.println("Measuring the inner air.");
@@ -161,6 +167,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  Serial.println("Putting data into dataString");
   dataString += "averageValue1";
   dataString += ",";
   dataString += "averageValue2";
@@ -169,6 +176,8 @@ void loop() {
   dataString += ",";
   dataString += "averageValue4";
   dataString += ",";
+  Serial.println("Finished putting data into dataString.");
+  Serial.println(dataString);
 
   //room
   Serial.println("Measuring the room air.");
@@ -197,6 +206,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  Serial.println("Putting data into dataString");
   dataString += "averageValue1";
   dataString += ",";
   dataString += "averageValue2";
@@ -205,6 +215,8 @@ void loop() {
   dataString += ",";
   dataString += "averageValue4";
   dataString += ",";
+  Serial.println("Finished putting data into dataString.");
+  Serial.println(dataString);
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
