@@ -28,12 +28,12 @@ double averageValue4;
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
-  
+
   pinMode(valve1, OUTPUT);
   pinMode(valve2, OUTPUT);
   pinMode(valve3, OUTPUT);
   Serial.println("Set pins controlling valves to output.");
-  
+
   if(SD.begin(4)) {
     Serial.println("SD card connected through pin 4");
   }
@@ -47,6 +47,13 @@ void setup() {
 }
 void loop() {
   String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
+  /*
+  The formatting for dataString will be for a .csv file:
+  date/Time, zeroAirVOC, zeroAirCO, zeroAirTemperature, zeroAirHumidity, ...
+  Followed by post finish filter air
+  Followed by inner air
+  Followed by room air
+  */
 
   //zero
   Serial.println("Measuring the zero air.");
@@ -79,9 +86,9 @@ void loop() {
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
   zeroValueSensor4 = averageValue4;
-  
+
   //***Calibrate?
-  
+
   //post finish filter
   Serial.println("Measuring the post finish filter air.");
   setValves("post finish filter");
@@ -109,7 +116,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
-  
+
   //inner
   Serial.println("Measuring the inner air.");
   setValves("inner");
@@ -137,7 +144,7 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
-  
+
   //room
   Serial.println("Measuring the room air.");
   setValves("room");
@@ -195,14 +202,14 @@ boolean setValves(String setting) {
   }
 }
 double takeSample1() { //CO
-  
+
 }
 double takeSample2() { //VOC
-  
+
 }
 double takeSample3() { //Humidity
-  
+
 }
 double takeSample4() { //Temperature
-  
+
 }
