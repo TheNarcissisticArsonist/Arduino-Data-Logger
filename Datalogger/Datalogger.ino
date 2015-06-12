@@ -61,9 +61,9 @@ void loop() {
   setValves("zero");
   Serial.println("Set valves for zero air.");
   Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vaccuum pump?
+  //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vaccuum pump?
+  //***Turn off vacuum pump?
   Serial.println("Air changed, starting to take measurements.");
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
@@ -106,9 +106,9 @@ void loop() {
   setValves("post finish filter");
   Serial.println("Set valves for post finish filter air.");
   Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vaccuum pump?
+  //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vaccuum pump?
+  //***Turn off vacuum pump?
   Serial.println("Air changed, starting to take measurements.");
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
@@ -145,9 +145,9 @@ void loop() {
   setValves("inner");
   Serial.println("Set valves for inner air.");
   Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vaccuum pump?
+  //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vaccuum pump?
+  //***Turn off vacuum pump?
   Serial.println("Air changed, starting to take measurements.");
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
@@ -184,9 +184,9 @@ void loop() {
   setValves("room");
   Serial.println("Set valves for room air.");
   Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vaccuum pump?
+  //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vaccuum pump?
+  //***Turn off vacuum pump?
   Serial.println("Air changed, starting to take measurements.");
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
