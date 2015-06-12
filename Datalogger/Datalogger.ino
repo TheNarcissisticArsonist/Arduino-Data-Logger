@@ -1,3 +1,5 @@
+// comments starting with *** are questions in the code
+
 #include <SD.h>
 #include <SPI.h>
 
@@ -5,8 +7,9 @@ const int valve1 = 1; //Valve one is the valve closest to the sensor array, insi
 const int valve2 = 2; //Valve two is the valve that chooses between "Room Air" and "Zero Air"
 const int valve3 = 3; //Valve three is the valve that chooses between "Inter-System Air" and "Outlet Air"
 
-const int delayBetweenMeasurements = 120; //This is in seconds
+const int delayWhileChangingAir = 120; //This is in seconds
 
+//***Should sensors have double values, or will it be something else?
 double zeroValueSensor1; //CO
 double zeroValueSensor2; //VOC
 double zeroValueSensor3; //Humidity
@@ -14,12 +17,12 @@ double zeroValueSensor4; //Temperature
 
 void setup() {
   Serial.begin(9600);
-  Serial.println("Serial connected");
+  Serial.println("Serial connected.");
   
   pinMode(valve1, OUTPUT);
   pinMode(valve2, OUTPUT);
   pinMode(valve3, OUTPUT);
-  Serial.println("Set pins controlling valves to output");
+  Serial.println("Set pins controlling valves to output.");
   
   if(SD.begin(4)) {
     Serial.println("SD card connected through pin 4");
@@ -35,7 +38,12 @@ void setup() {
 void loop() {
   String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
   setValves("zero");
-  delay(1000 * delayBetweenMeasurements); //1000 milliseconds * x seconds
+  Serial.println("Set valves for zero air.");
+  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
+  //***Turn on vaccuum pump?
+  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
+  //***Turn off vaccuum pump?
+  Serial.println("Air changed, starting to take measurements.");
   double sumValuesSensor1 = 0; //CO sensor
   double sumValuesSensor2 = 0; //VOC sensor
   double sumValuesSensor3 = 0; //Humidity sensor
@@ -45,8 +53,11 @@ void loop() {
     sumValuesSensor2 += takeSample2();
     sumValuesSensor3 += takeSample3();
     sumValuesSensor4 += takeSample4();
+    Serial.print("Took measurement #");
+    Serial.println(i+1);
     delay(1000);
   }
+  Serial.println("Finished getting values. Averaging...");
   double averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
   double averageValue2 = sumValuesSensor2/30;
   double averageValue3 = sumValuesSensor3/30;
@@ -55,6 +66,8 @@ void loop() {
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
   zeroValueSensor4 = averageValue4;
+  
+  //***Calibrate?
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
@@ -63,25 +76,25 @@ boolean setValves(String setting) {
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for zero air");
+    Serial.println("Set valves for zero air.");
   }
   if(setting == "post finish filter") {
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for post finish filter air");
+    Serial.println("Set valves for post finish filter air.");
   }
   if(setting == "inner") {
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for inner air");
+    Serial.println("Set valves for inner air.");
   }
   if(setting == "room") {
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for room air");
+    Serial.println("Set valves for room air.");
   }
 }
 double takeSample1() { //CO
