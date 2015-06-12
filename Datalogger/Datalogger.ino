@@ -30,11 +30,29 @@ void loop() {
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
-  //Valid options are shown in the switch statement below
-  if(setting == "zero air") {
-    digitalWrite(valve1, LOW);
-    digitalWrite(valve2, HIGH);
-    //This turns off valve 1 and turns valve 2 on, making a path from zero air to the VOC sensor
+  //Valid options are shown in the conditional statements below
+  if(setting == "zero") {
+    /*digitalWrite(valve1, );
+    digitalWrite(valve2, );
+    digitalWrite(valve3, );*/
     Serial.println("Set valves for zero air");
+  }
+  if(setting == "post finish filter") {
+    /*digitalWrite(valve1, );
+    digitalWrite(valve2, );
+    digitalWrite(valve3, );*/
+    Serial.println("Set valves for post finish filter air");
+  }
+  if(setting == "inner") {
+    /*digitalWrite(valve1, );
+    digitalWrite(valve2, );
+    digitalWrite(valve3, );*/
+    Serial.println("Set valves for inner air");
+  }
+  if(setting == "room") {
+    /*digitalWrite(valve1, );
+    digitalWrite(valve2, );
+    digitalWrite(valve3, );*/
+    Serial.println("Set valves for room air");
   }
 }
