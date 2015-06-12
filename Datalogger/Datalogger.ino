@@ -15,6 +15,12 @@ double zeroValueSensor2; //VOC
 double zeroValueSensor3; //Humidity
 double zeroValueSensor4; //Temperature
 
+//These are used to find the average, by adding all the measurements and then dividing by 30.
+double sumValuesSensor1;
+double sumValuesSensor2;
+double sumValuesSensor3;
+double sumValuesSensor4;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
@@ -44,10 +50,10 @@ void loop() {
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
   //***Turn off vaccuum pump?
   Serial.println("Air changed, starting to take measurements.");
-  double sumValuesSensor1 = 0; //CO sensor
-  double sumValuesSensor2 = 0; //VOC sensor
-  double sumValuesSensor3 = 0; //Humidity sensor
-  double sumValuesSensor3 = 0; //Temperature sensor
+  sumValuesSensor1 = 0; //CO sensor
+  sumValuesSensor2 = 0; //VOC sensor
+  sumValuesSensor3 = 0; //Humidity sensor
+  sumValuesSensor3 = 0; //Temperature sensor
   for(int i=0; i<30; i++) {
     sumValuesSensor1 += takeSample1(); //These get the total value
     sumValuesSensor2 += takeSample2();
