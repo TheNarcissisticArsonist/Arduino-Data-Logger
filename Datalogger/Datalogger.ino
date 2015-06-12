@@ -49,7 +49,7 @@ void loop() {
   String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
   /*
   The formatting for dataString will be for a .csv file:
-  zeroAirVOC, zeroAirCO, zeroAirTemperature, zeroAirHumidity, ...
+  zeroAirCO, zeroAirVOC, zeroAirHumidity, zeroAirTemperature...
   Followed by post finish filter air
   Followed by inner air
   Followed by room air
@@ -83,6 +83,14 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  dataString += "averageValue1";
+  dataString += ",";
+  dataString += "averageValue2";
+  dataString += ",";
+  dataString += "averageValue3";
+  dataString += ",";
+  dataString += "averageValue4";
+  dataString += ",";
   zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
@@ -117,6 +125,14 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  dataString += "averageValue1";
+  dataString += ",";
+  dataString += "averageValue2";
+  dataString += ",";
+  dataString += "averageValue3";
+  dataString += ",";
+  dataString += "averageValue4";
+  dataString += ",";
 
   //inner
   Serial.println("Measuring the inner air.");
@@ -145,6 +161,14 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  dataString += "averageValue1";
+  dataString += ",";
+  dataString += "averageValue2";
+  dataString += ",";
+  dataString += "averageValue3";
+  dataString += ",";
+  dataString += "averageValue4";
+  dataString += ",";
 
   //room
   Serial.println("Measuring the room air.");
@@ -173,6 +197,14 @@ void loop() {
   averageValue2 = sumValuesSensor2/30;
   averageValue3 = sumValuesSensor3/30;
   averageValue4 = sumValuesSensor4/30;
+  dataString += "averageValue1";
+  dataString += ",";
+  dataString += "averageValue2";
+  dataString += ",";
+  dataString += "averageValue3";
+  dataString += ",";
+  dataString += "averageValue4";
+  dataString += ",";
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
