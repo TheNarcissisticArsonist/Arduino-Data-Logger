@@ -49,10 +49,11 @@ void loop() {
   String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
   /*
   The formatting for dataString will be for a .csv file:
-  date/Time, zeroAirVOC, zeroAirCO, zeroAirTemperature, zeroAirHumidity, ...
+  zeroAirVOC, zeroAirCO, zeroAirTemperature, zeroAirHumidity, ...
   Followed by post finish filter air
   Followed by inner air
   Followed by room air
+  Followed lastly, by date and time information
   */
 
   //zero
