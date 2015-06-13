@@ -71,6 +71,11 @@ void loop() {
   dataString += takeMeasurement("post finish filter", "dataString");
   dataString += takeMeasurement("inner", "dataString");
   dataString += takeMeasurement("room", "dataString");
+
+  Serial.println("");
+  Serial.println("Final dataString:");
+  Serial.println(dataString);
+  Serial.pringln("");
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
@@ -156,7 +161,7 @@ String takeMeasurement(String setting, String data) {
   data += "averageValue4";
   data += ",";
   Serial.println("Finished putting data into dataString.");
-  Serial.println("Data");
+  Serial.println(data);
   Serial.println("");
   return data;
 }
