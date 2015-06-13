@@ -59,7 +59,7 @@ void loop() {
   Followed by room air
   Followed lastly, by date and time information
   */
-  dataString += takeMeasurement("zero", "dataString");
+  dataString += takeMeasurement("zero");
 
   zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
   zeroValueSensor2 = averageValue2;
@@ -68,14 +68,14 @@ void loop() {
 
   //***Calibrate?
 
-  dataString += takeMeasurement("post finish filter", "dataString");
-  dataString += takeMeasurement("inner", "dataString");
-  dataString += takeMeasurement("room", "dataString");
+  dataString += takeMeasurement("post finish filter");
+  dataString += takeMeasurement("inner");
+  dataString += takeMeasurement("room");
 
   Serial.println("");
   Serial.println("Final dataString:");
   Serial.println(dataString);
-  Serial.pringln("");
+  Serial.println("");
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
@@ -117,7 +117,8 @@ double takeSample3() { //Humidity
 double takeSample4() { //Temperature
 
 }
-String takeMeasurement(String setting, String data) {
+String takeMeasurement(String setting) {
+  String data = "";
   Serial.print("Measuring the ");
   Serial.print(setting);
   Serial.println(" air.");
