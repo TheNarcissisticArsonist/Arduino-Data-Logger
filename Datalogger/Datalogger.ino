@@ -55,168 +55,18 @@ void loop() {
   Followed by room air
   Followed lastly, by date and time information
   */
-
-  //zero
-  Serial.println("Measuring the zero air.");
-  setValves("zero");
-  Serial.println("Set valves for zero air.");
-  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vacuum pump?
-  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vacuum pump?
-  Serial.println("Air changed, starting to take measurements.");
-  sumValuesSensor1 = 0; //CO sensor
-  sumValuesSensor2 = 0; //VOC sensor
-  sumValuesSensor3 = 0; //Humidity sensor
-  sumValuesSensor3 = 0; //Temperature sensor
-  for(int i=0; i<30; i++) {
-    sumValuesSensor1 += takeSample1(); //These get the total value
-    sumValuesSensor2 += takeSample2();
-    sumValuesSensor3 += takeSample3();
-    sumValuesSensor4 += takeSample4();
-    Serial.print("Took measurement #");
-    Serial.println(i+1);
-    delay(1000);
-  }
-  Serial.println("Finished getting values. Averaging...");
-  averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
-  averageValue2 = sumValuesSensor2/30;
-  averageValue3 = sumValuesSensor3/30;
-  averageValue4 = sumValuesSensor4/30;
-  Serial.println("Putting data into dataString");
-  dataString += "averageValue1";
-  dataString += ",";
-  dataString += "averageValue2";
-  dataString += ",";
-  dataString += "averageValue3";
-  dataString += ",";
-  dataString += "averageValue4";
-  dataString += ",";
-  Serial.println("Finished putting data into dataString.");
-  Serial.println(dataString);
+  dataString += takeMeasurement("zero", "dataString");
+  
   zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
   zeroValueSensor4 = averageValue4;
 
   //***Calibrate?
-
-  //post finish filter
-  Serial.println("Measuring the post finish filter air.");
-  setValves("post finish filter");
-  Serial.println("Set valves for post finish filter air.");
-  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vacuum pump?
-  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vacuum pump?
-  Serial.println("Air changed, starting to take measurements.");
-  sumValuesSensor1 = 0; //CO sensor
-  sumValuesSensor2 = 0; //VOC sensor
-  sumValuesSensor3 = 0; //Humidity sensor
-  sumValuesSensor3 = 0; //Temperature sensor
-  for(int i=0; i<30; i++) {
-    sumValuesSensor1 += takeSample1(); //These get the total value
-    sumValuesSensor2 += takeSample2();
-    sumValuesSensor3 += takeSample3();
-    sumValuesSensor4 += takeSample4();
-    Serial.print("Took measurement #");
-    Serial.println(i+1);
-    delay(1000);
-  }
-  Serial.println("Finished getting values. Averaging...");
-  averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
-  averageValue2 = sumValuesSensor2/30;
-  averageValue3 = sumValuesSensor3/30;
-  averageValue4 = sumValuesSensor4/30;
-  Serial.println("Putting data into dataString");
-  dataString += "averageValue1";
-  dataString += ",";
-  dataString += "averageValue2";
-  dataString += ",";
-  dataString += "averageValue3";
-  dataString += ",";
-  dataString += "averageValue4";
-  dataString += ",";
-  Serial.println("Finished putting data into dataString.");
-  Serial.println(dataString);
-
-  //inner
-  Serial.println("Measuring the inner air.");
-  setValves("inner");
-  Serial.println("Set valves for inner air.");
-  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vacuum pump?
-  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vacuum pump?
-  Serial.println("Air changed, starting to take measurements.");
-  sumValuesSensor1 = 0; //CO sensor
-  sumValuesSensor2 = 0; //VOC sensor
-  sumValuesSensor3 = 0; //Humidity sensor
-  sumValuesSensor3 = 0; //Temperature sensor
-  for(int i=0; i<30; i++) {
-    sumValuesSensor1 += takeSample1(); //These get the total value
-    sumValuesSensor2 += takeSample2();
-    sumValuesSensor3 += takeSample3();
-    sumValuesSensor4 += takeSample4();
-    Serial.print("Took measurement #");
-    Serial.println(i+1);
-    delay(1000);
-  }
-  Serial.println("Finished getting values. Averaging...");
-  averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
-  averageValue2 = sumValuesSensor2/30;
-  averageValue3 = sumValuesSensor3/30;
-  averageValue4 = sumValuesSensor4/30;
-  Serial.println("Putting data into dataString");
-  dataString += "averageValue1";
-  dataString += ",";
-  dataString += "averageValue2";
-  dataString += ",";
-  dataString += "averageValue3";
-  dataString += ",";
-  dataString += "averageValue4";
-  dataString += ",";
-  Serial.println("Finished putting data into dataString.");
-  Serial.println(dataString);
-
-  //room
-  Serial.println("Measuring the room air.");
-  setValves("room");
-  Serial.println("Set valves for room air.");
-  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
-  //***Turn on vacuum pump?
-  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
-  //***Turn off vacuum pump?
-  Serial.println("Air changed, starting to take measurements.");
-  sumValuesSensor1 = 0; //CO sensor
-  sumValuesSensor2 = 0; //VOC sensor
-  sumValuesSensor3 = 0; //Humidity sensor
-  sumValuesSensor3 = 0; //Temperature sensor
-  for(int i=0; i<30; i++) {
-    sumValuesSensor1 += takeSample1(); //These get the total value
-    sumValuesSensor2 += takeSample2();
-    sumValuesSensor3 += takeSample3();
-    sumValuesSensor4 += takeSample4();
-    Serial.print("Took measurement #");
-    Serial.println(i+1);
-    delay(1000);
-  }
-  Serial.println("Finished getting values. Averaging...");
-  averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
-  averageValue2 = sumValuesSensor2/30;
-  averageValue3 = sumValuesSensor3/30;
-  averageValue4 = sumValuesSensor4/30;
-  Serial.println("Putting data into dataString");
-  dataString += "averageValue1";
-  dataString += ",";
-  dataString += "averageValue2";
-  dataString += ",";
-  dataString += "averageValue3";
-  dataString += ",";
-  dataString += "averageValue4";
-  dataString += ",";
-  Serial.println("Finished putting data into dataString.");
-  Serial.println(dataString);
+  
+  dataString += takeMeasurement("post finish filter", "dataString");
+  dataString += takeMeasurement("inner", "dataString");
+  dataString += takeMeasurement("room", "dataString");
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
@@ -257,4 +107,48 @@ double takeSample3() { //Humidity
 }
 double takeSample4() { //Temperature
 
+}
+String takeMeasurement(String setting, String data) {
+  Serial.print("Measuring the ");
+  Serial.print(setting);
+  Serial.println(" air.");
+  setValves(setting);
+  Serial.print("Set valves for ");
+  Serial.print(setting);
+  Serial.println(" air.");
+  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
+  //***Turn on vacuum pump?
+  delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
+  //***Turn off vacuum pump?
+  Serial.println("Air changed, starting to take measurements.");
+  sumValuesSensor1 = 0; //CO sensor
+  sumValuesSensor2 = 0; //VOC sensor
+  sumValuesSensor3 = 0; //Humidity sensor
+  sumValuesSensor3 = 0; //Temperature sensor
+  for(int i=0; i<30; i++) {
+    sumValuesSensor1 += takeSample1(); //These get the total value
+    sumValuesSensor2 += takeSample2();
+    sumValuesSensor3 += takeSample3();
+    sumValuesSensor4 += takeSample4();
+    Serial.print("Took measurement #");
+    Serial.println(i+1);
+    delay(1000);
+  }
+  Serial.println("Finished getting values. Averaging...");
+  averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
+  averageValue2 = sumValuesSensor2/30;
+  averageValue3 = sumValuesSensor3/30;
+  averageValue4 = sumValuesSensor4/30;
+  Serial.println("Putting data into dataString");
+  data += "averageValue1";
+  data += ",";
+  data += "averageValue2";
+  data += ",";
+  data += "averageValue3";
+  data += ",";
+  data += "averageValue4";
+  data += ",";
+  Serial.println("Finished putting data into dataString.");
+  Serial.println("Data");
+  return data;
 }
