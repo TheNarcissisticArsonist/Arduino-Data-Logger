@@ -32,7 +32,7 @@ void setup() {
   pinMode(valve1, OUTPUT);
   pinMode(valve2, OUTPUT);
   pinMode(valve3, OUTPUT);
-  Serial.println("Set pins controlling valves to output.");
+  Serial.println("Set up pins controlling valves.");
 
   if(SD.begin(4)) {
     Serial.println("SD card connected through pin 4");
@@ -44,6 +44,10 @@ void setup() {
     Serial.println("ERROR: SD card could not connect via pin 4.");
     while(true);
   }
+  Serial.println("Completed void setup().");
+  Serial.println("");
+  Serial.println("");
+  Serial.println("");
 }
 void loop() {
   String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
@@ -56,14 +60,14 @@ void loop() {
   Followed lastly, by date and time information
   */
   dataString += takeMeasurement("zero", "dataString");
-  
+
   zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
   zeroValueSensor2 = averageValue2;
   zeroValueSensor3 = averageValue3;
   zeroValueSensor4 = averageValue4;
 
   //***Calibrate?
-  
+
   dataString += takeMeasurement("post finish filter", "dataString");
   dataString += takeMeasurement("inner", "dataString");
   dataString += takeMeasurement("room", "dataString");
@@ -72,28 +76,28 @@ boolean setValves(String setting) {
   //setting is used to determine the configuration
   //Valid options are shown in the conditional statements below
   if(setting == "zero") {
+  Serial.println("Setting valves for zero air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for zero air.");
   }
   if(setting == "post finish filter") {
+  Serial.println("Setting valves for post finish filter air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for post finish filter air.");
   }
   if(setting == "inner") {
+  Serial.println("Setting valves for inner air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for inner air.");
   }
   if(setting == "room") {
+  Serial.println("Setting valves for room air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
-    Serial.println("Set valves for room air.");
   }
 }
 double takeSample1() { //CO
@@ -116,6 +120,7 @@ String takeMeasurement(String setting, String data) {
   Serial.print("Set valves for ");
   Serial.print(setting);
   Serial.println(" air.");
+  Serial.println("");
   Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
   //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
@@ -125,6 +130,7 @@ String takeMeasurement(String setting, String data) {
   sumValuesSensor2 = 0; //VOC sensor
   sumValuesSensor3 = 0; //Humidity sensor
   sumValuesSensor3 = 0; //Temperature sensor
+  Serial.println("");
   for(int i=0; i<30; i++) {
     sumValuesSensor1 += takeSample1(); //These get the total value
     sumValuesSensor2 += takeSample2();
@@ -134,6 +140,7 @@ String takeMeasurement(String setting, String data) {
     Serial.println(i+1);
     delay(1000);
   }
+  Serial.println("");
   Serial.println("Finished getting values. Averaging...");
   averageValue1 = sumValuesSensor1/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
   averageValue2 = sumValuesSensor2/30;
@@ -150,5 +157,6 @@ String takeMeasurement(String setting, String data) {
   data += ",";
   Serial.println("Finished putting data into dataString.");
   Serial.println("Data");
+  Serial.println("");
   return data;
 }
