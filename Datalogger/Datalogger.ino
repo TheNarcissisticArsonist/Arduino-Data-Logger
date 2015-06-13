@@ -7,7 +7,7 @@ const int valve1 = 1; //Valve one is the valve closest to the sensor array, insi
 const int valve2 = 2; //Valve two is the valve that chooses between "Room Air" and "Zero Air"
 const int valve3 = 3; //Valve three is the valve that chooses between "Inter-System Air" and "Outlet Air"
 
-const int delayWhileChangingAir = 120; //This is in seconds
+const int delayWhileChangingAir = 5; //This is in seconds
 
 //***Should sensors have double values, or will it be something else?
 double zeroValueSensor1; //CO
@@ -137,7 +137,7 @@ String takeMeasurement(String setting) {
   sumValuesSensor3 = 0; //Humidity sensor
   sumValuesSensor3 = 0; //Temperature sensor
   Serial.println("");
-  for(int i=0; i<30; i++) {
+  for(int i=0; i<5; i++) {
     sumValuesSensor1 += takeSample1(); //These get the total value
     sumValuesSensor2 += takeSample2();
     sumValuesSensor3 += takeSample3();
