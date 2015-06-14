@@ -168,13 +168,13 @@ String takeMeasurement(String setting) {
   averageValue3 = ((double)sumValuesSensor3)/measurementTime;
   averageValue4 = ((double)sumValuesSensor4)/measurementTime;
   Serial.println("Putting data into dataString");
-  data += "averageValue1";
+  data += String(averageValue1);
   data += ",";
-  data += "averageValue2";
+  data += String(averageValue2);
   data += ",";
-  data += "averageValue3";
+  data += String(averageValue3);
   data += ",";
-  data += "averageValue4";
+  data += String(averageValue4);
   data += ",";
   Serial.println("Finished putting data into dataString.");
   Serial.println(data);
