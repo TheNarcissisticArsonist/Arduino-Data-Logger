@@ -28,6 +28,12 @@ double averageValue4;
 //How long the system measures the sensors (at 1 Hz) before averaging
 int measurementTime = 5;
 
+//Analog ports and their respective sensors
+int sensorCO = 1;
+int sensorVOC = 2;
+int sensorHumidity = 3;
+int sensorTemperature = 4;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
@@ -111,16 +117,16 @@ boolean setValves(String setting) {
 int takeSample(int sensor) {
   switch(sensor) {
     case 1: //CO
-
+      return analogRead(sensorCO);
       break;
     case 2: //VOC
-
+      return analogRead(sensorVOC);
       break;
     case 3: //Humidity
-
+    return analogRead(sensorHumidity);
       break;
     case 4: //Temperature
-
+    return analogRead(sensorTemperature);
       break;
     default:
       Serial.println("No sensor for that number!");
