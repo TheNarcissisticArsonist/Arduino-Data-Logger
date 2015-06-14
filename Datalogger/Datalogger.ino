@@ -25,6 +25,9 @@ double averageValue2;
 double averageValue3;
 double averageValue4;
 
+//How long the system measures the sensors (at 1 Hz) before averaging
+int measurementTime = 5;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
@@ -137,7 +140,7 @@ String takeMeasurement(String setting) {
   sumValuesSensor3 = 0; //Humidity sensor
   sumValuesSensor3 = 0; //Temperature sensor
   Serial.println("");
-  for(int i=0; i<5; i++) {
+  for(int i=0; i<measurementTime; i++) {
     sumValuesSensor1 += takeSample1(); //These get the total value
     sumValuesSensor2 += takeSample2();
     sumValuesSensor3 += takeSample3();
@@ -148,10 +151,10 @@ String takeMeasurement(String setting) {
   }
   Serial.println("");
   Serial.println("Finished getting values. Averaging...");
-  averageValue1 = ((double)sumValuesSensor1)/30; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
-  averageValue2 = ((double)sumValuesSensor2)/30;
-  averageValue3 = ((double)sumValuesSensor3)/30;
-  averageValue4 = ((double)sumValuesSensor4)/30;
+  averageValue1 = ((double)sumValuesSensor1)/measurementTime; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
+  averageValue2 = ((double)sumValuesSensor2)/measurementTime;
+  averageValue3 = ((double)sumValuesSensor3)/measurementTime;
+  averageValue4 = ((double)sumValuesSensor4)/measurementTime;
   Serial.println("Putting data into dataString");
   data += "averageValue1";
   data += ",";
