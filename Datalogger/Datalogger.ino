@@ -108,16 +108,16 @@ boolean setValves(String setting) {
     digitalWrite(valve3, );*/
   }
 }
-double takeSample1() { //CO
+int takeSample1() { //CO
 
 }
-double takeSample2() { //VOC
+int takeSample2() { //VOC
 
 }
-double takeSample3() { //Humidity
+int takeSample3() { //Humidity
 
 }
-double takeSample4() { //Temperature
+int takeSample4() { //Temperature
 
 }
 String takeMeasurement(String setting) {
