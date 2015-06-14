@@ -91,6 +91,7 @@ void loop() {
 
   dataFile = SD.open("data.csv", FILE_WRITE);
   dataFile.println(dataString);
+  dataFile.close();
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
