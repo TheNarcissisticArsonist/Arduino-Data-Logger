@@ -147,10 +147,10 @@ String takeMeasurement(String setting) {
   sumValuesSensor3 = 0; //Temperature sensor
   Serial.println("");
   for(int i=0; i<measurementTime; i++) {
-    sumValuesSensor1 += takeSample1(); //These get the total value
-    sumValuesSensor2 += takeSample2();
-    sumValuesSensor3 += takeSample3();
-    sumValuesSensor4 += takeSample4();
+    sumValuesSensor1 += takeSample(1); //These get the total value
+    sumValuesSensor2 += takeSample(2);
+    sumValuesSensor3 += takeSample(3);
+    sumValuesSensor4 += takeSample(4);
     Serial.print("Took measurement #");
     Serial.println(i+1);
     delay(1000);
