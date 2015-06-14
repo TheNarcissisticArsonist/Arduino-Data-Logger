@@ -16,10 +16,10 @@ double zeroValueSensor3; //Humidity
 double zeroValueSensor4; //Temperature
 
 //These are used to find the average, by adding all the measurements and then dividing by 30.
-double sumValuesSensor1;
-double sumValuesSensor2;
-double sumValuesSensor3;
-double sumValuesSensor4;
+int sumValuesSensor1;
+int sumValuesSensor2;
+int sumValuesSensor3;
+int sumValuesSensor4;
 double averageValue1;
 double averageValue2;
 double averageValue3;
