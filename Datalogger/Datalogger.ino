@@ -108,17 +108,23 @@ boolean setValves(String setting) {
     digitalWrite(valve3, );*/
   }
 }
-int takeSample1() { //CO
+int takeSample(int sensor) {
+  switch(sensor) {
+    case 1: //CO
 
-}
-int takeSample2() { //VOC
+      break;
+    case 2: //VOC
 
-}
-int takeSample3() { //Humidity
+      break;
+    case 3: //Humidity
 
-}
-int takeSample4() { //Temperature
+      break;
+    case 4: //Temperature
 
+      break;
+    default:
+      Serial.println("No sensor for that number!");
+  }
 }
 String takeMeasurement(String setting) {
   String data = "";
