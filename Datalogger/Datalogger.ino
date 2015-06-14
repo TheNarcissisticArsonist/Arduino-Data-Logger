@@ -34,6 +34,9 @@ int sensorVOC = 2;
 int sensorHumidity = 3;
 int sensorTemperature = 4;
 
+//Creating an instance of the file class, to be used later
+File dataFile;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
@@ -85,6 +88,9 @@ void loop() {
   Serial.println("Final dataString:");
   Serial.println(dataString);
   Serial.println("");
+
+  dataFile = SD.open("data.csv", FILE_WRITE);
+  dataFile.println(dataString);
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
