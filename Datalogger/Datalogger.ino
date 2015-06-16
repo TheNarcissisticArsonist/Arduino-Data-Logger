@@ -64,7 +64,8 @@ void setup() {
   Serial.println("");
   Serial.println("");
   Serial.println("");
-
+}
+void loop() {
   dataFile = SD.open("DATA.csv", FILE_WRITE);
   dataFile.print(takeMeasurement("zero"));
   dataFile.flush();
@@ -74,9 +75,9 @@ void setup() {
   dataFile.flush();
   dataFile.print(takeMeasurement("room"));
   dataFile.flush();
+  dataFile.println("");
+  dataFile.flush();
   dataFile.close();
-}
-void loop() {
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
@@ -142,7 +143,7 @@ String takeMeasurement(String setting) {
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
   sumValuesSensor3 = 0; //Humidity sensor
-  sumValuesSensor3 = 0; //Temperature sensor
+  sumValuesSensor4 = 0; //Temperature sensor
   Serial.println("");
   for(int i=0; i<measurementTime; i++) {
     sumValuesSensor1 += takeSample(1); //These get the total value
