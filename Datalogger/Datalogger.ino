@@ -64,39 +64,19 @@ void setup() {
   Serial.println("");
   Serial.println("");
   Serial.println("");
+
+  dataFile = SD.open("DATA.csv", FILE_WRITE);
+  dataFile.print(takeMeasurement("zero"));
+  dataFile.flush();
+  dataFile.print(takeMeasurement("post finish filter"));
+  dataFile.flush();
+  dataFile.print(takeMeasurement("inner"));
+  dataFile.flush();
+  dataFile.print(takeMeasurement("room"));
+  dataFile.flush();
+  dataFile.close();
 }
 void loop() {
-  dataString = "";
-  //The data is formatted and dumped into this string, and then dumped into the log file
-  /*
-  The formatting for dataString will be for a .csv file:
-  zeroAirCO, zeroAirVOC, zeroAirHumidity, zeroAirTemperature...
-  Followed by post finish filter air
-  Followed by inner air
-  Followed by room air
-  Followed lastly, by date and time information
-  */
-  dataString += takeMeasurement("zero");
-
-  zeroValueSensor1 = averageValue1; //And this sets the zero value to the average value we just found (this is zero air)
-  zeroValueSensor2 = averageValue2;
-  zeroValueSensor3 = averageValue3;
-  zeroValueSensor4 = averageValue4;
-
-  //***Calibrate?
-
-  dataString += takeMeasurement("post finish filter");
-  dataString += takeMeasurement("inner");
-  dataString += takeMeasurement("room");
-
-  Serial.println("");
-  Serial.println("Final dataString:");
-  Serial.println(dataString);
-  Serial.println("");
-
-  dataFile = SD.open("data.csv", FILE_WRITE);
-  dataFile.println(dataString);
-  dataFile.close();
 }
 boolean setValves(String setting) {
   //setting is used to determine the configuration
