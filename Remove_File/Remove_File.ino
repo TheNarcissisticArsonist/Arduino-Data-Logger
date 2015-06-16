@@ -11,7 +11,7 @@ void setup() {
   Serial.println("");
   Serial.println("");
   Serial.println(SD.begin(4));
-  SD.remove(file);
+  Serial.pringln(SD.remove(file));
   Serial.println("Done.");
 }
 void loop() {}
