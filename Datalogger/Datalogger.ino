@@ -37,6 +37,10 @@ int sensorTemperature = 4;
 //Creating an instance of the file class, to be used later
 File dataFile;
 
+//Used later.
+//See void loop() for more info
+String dataString;
+
 void setup() {
   Serial.begin(9600);
   Serial.println("Serial connected.");
@@ -62,7 +66,8 @@ void setup() {
   Serial.println("");
 }
 void loop() {
-  String dataString = ""; //The data is formatted and dumped into this string, and then dumped into the log file
+  dataString = "";
+  //The data is formatted and dumped into this string, and then dumped into the log file
   /*
   The formatting for dataString will be for a .csv file:
   zeroAirCO, zeroAirVOC, zeroAirHumidity, zeroAirTemperature...
