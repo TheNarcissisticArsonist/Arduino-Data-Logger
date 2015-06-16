@@ -1,0 +1,21 @@
+1
+2
+3
+4     Wifi Shield AND Relay Shield ***THIS IS A PROBLEM***
+5     Relay Shield
+6     Relay Shield
+7     Wifi Shield AND Relay Shield ***THIS IS A PROBLEM***
+8
+9
+10    Wifi Shield
+11    Wifi Shield
+12    Wifi Shield
+13    Wifi Shield
+A0
+A1
+A2
+A3
+A4
+A5
+
+Updated as of 6/16/2015
