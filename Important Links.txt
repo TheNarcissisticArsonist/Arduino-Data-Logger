@@ -1,0 +1,4 @@
+http://forums.adafruit.com/viewtopic.php?f=31&t=7108%23p34846
+https://github.com/TheNarcissisticArsonist/Arduino-Data-Logger
+http://www.arduino.cc/en/Reference/SD
+http://www.arduino.cc/en/Reference/SDCardNotes
