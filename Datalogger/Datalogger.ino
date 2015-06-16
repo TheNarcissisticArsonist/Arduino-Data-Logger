@@ -83,28 +83,33 @@ boolean setValves(String setting) {
   //setting is used to determine the configuration
   //Valid options are shown in the conditional statements below
   if(setting == "zero") {
-  Serial.println("Setting valves for zero air.");
+    Serial.println("Setting valves for zero air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
   }
-  if(setting == "post finish filter") {
-  Serial.println("Setting valves for post finish filter air.");
+  else if(setting == "post finish filter") {
+    Serial.println("Setting valves for post finish filter air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
   }
-  if(setting == "inner") {
-  Serial.println("Setting valves for inner air.");
+  else if(setting == "inner") {
+    Serial.println("Setting valves for inner air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
   }
-  if(setting == "room") {
-  Serial.println("Setting valves for room air.");
+  else if(setting == "room") {
+    Serial.println("Setting valves for room air.");
     /*digitalWrite(valve1, );
     digitalWrite(valve2, );
     digitalWrite(valve3, );*/
+  }
+  else {
+    Serial.print("ERROR: ");
+    Serial.print(setting);
+    Serial.print(" is not a known valve configuration!");
   }
 }
 int takeSample(int sensor) {
