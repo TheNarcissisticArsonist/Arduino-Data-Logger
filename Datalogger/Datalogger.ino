@@ -60,18 +60,6 @@ void setup() {
     Serial.println("ERROR: SD card could not connect via pin 4.");
     while(true);
   }
-  Serial.println("Dealing with file if it already exists.");
-  if(SD.exists("DATA.csv")) {
-    Serial.println("DATA.csv already exists, adding some blank space before recording more data.");
-    dataFile = SD.open("DATA.csv", FILE_WRITE);
-    dataFile.println("");
-    dataFile.println("");
-    dataFile.println("");
-    dataFile.flush();
-    dataFile.close();
-    Serial.println("Done.");
-  }
-
   Serial.println("Completed void setup().");
   Serial.println("");
   Serial.println("");
@@ -136,7 +124,7 @@ boolean setValves(String setting) {
   else {
     Serial.print("ERROR: ");
     Serial.print(setting);
-    Serial.print(" is not a known valve configuration!");
+    Serial.println(" is not a known valve configuration!");
   }
 }
 int takeSample(int sensor) {
