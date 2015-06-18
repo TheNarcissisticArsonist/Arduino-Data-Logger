@@ -75,6 +75,21 @@ void loop() {
   dataFile.flush();
   dataFile.print(takeMeasurement("room"));
   dataFile.flush();
+
+  //Somehow get date and time and put it into the file. Use HTTP?
+  //Date time format for the file:
+  //month,day,year,hour (military), minute, second, [millisecond?]
+
+  //Dummy date data (hey, that's alliterative!)
+  dataFile.print("1,"); //month
+  dataFile.print("2,"); //day
+  dataFile.print("2015,"); //year
+  dataFile.print("16,"); //hour
+  dataFile.print("30,"); //minute
+  dataFile.print("10,"); //second
+  dataFile.print("500"); //millisecond
+  dataFile.flush();
+
   dataFile.println("");
   dataFile.flush();
   dataFile.close();
