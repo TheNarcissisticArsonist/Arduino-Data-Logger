@@ -1,4 +1,11 @@
 http://forums.adafruit.com/viewtopic.php?f=31&t=7108%23p34846
+How to format an SD card as FAT16 (the best filesystem for Arduino) on a mac.
+
 https://github.com/TheNarcissisticArsonist/Arduino-Data-Logger
+The code itself (for now).
+
 http://www.arduino.cc/en/Reference/SD
+SD card reference.
+
 http://www.arduino.cc/en/Reference/SDCardNotes
+More SD card reference.
