@@ -2,8 +2,8 @@
 2
 3
 4     Wifi Shield
-5     Relay Shield
-6     Relay Shield
+5     
+6
 7     Wifi Shield
 8
 9
