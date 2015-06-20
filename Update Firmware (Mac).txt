@@ -1,0 +1,7 @@
+Instructions used are here: http://www.arduino.cc/en/Hacking/WiFiShieldFirmwareUpgrading
+and here: http://www.uriahbaalke.com/?p=106
+
+If you mix and match both, and mess around with the shield, it'll work eventually.
+
+The final command I ended up running was:
+sudo bash ArduinoWifiShield_upgrade_mac.sh -a /Applications/Arduino.app/Contents/Resources/Java/ -f all
