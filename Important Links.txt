@@ -9,3 +9,6 @@ SD card reference.
 
 http://www.arduino.cc/en/Reference/SDCardNotes
 More SD card reference.
+
+http://tf.nist.gov/tf-cgi/servers.cgi
+Date/time servers for the US government
