@@ -12,3 +12,6 @@ More SD card reference.
 
 http://tf.nist.gov/tf-cgi/servers.cgi
 Date/time servers for the US government
+
+https://www.arduino.cc/en/Reference/Wire
+I2C library
