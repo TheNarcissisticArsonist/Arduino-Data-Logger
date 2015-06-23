@@ -2,6 +2,7 @@
 
 #include <SD.h>
 #include <SPI.h>
+#include <WiFi.h>
 
 const int valve1 = 1; //Valve one is the valve closest to the sensor array, inside of valves two and three
 const int valve2 = 2; //Valve two is the valve that chooses between "Room Air" and "Zero Air"
@@ -41,14 +42,19 @@ File dataFile;
 //See void loop() for more info
 String dataString;
 
+//Stuff used for the wifi connection
+char ssid[] = "RedSox2";
+char pass[] = "fenway1999";
+int status = WL_IDLE_STATUS;
+char server[] = "time.nist.gov";
+WiFiClient client;
+
 void setup() {
   Serial.begin(9600);
-  Serial.println("Serial connected.");
 
   pinMode(valve1, OUTPUT);
   pinMode(valve2, OUTPUT);
   pinMode(valve3, OUTPUT);
-  Serial.println("Set up pins controlling valves.");
 
   if(SD.begin(4)) {
     Serial.println("SD card connected through pin 4");
@@ -59,6 +65,14 @@ void setup() {
     Serial.println("");
     Serial.println("ERROR: SD card could not connect via pin 4.");
     while(true);
+  }
+  Serial.println("Attempting to connect to wifi.");
+  while(status != WL_CONNECTED) {
+    Serial.println("Not yet connected.");
+    Serial.println(status);
+    status = WiFi.begin(ssid, pass);
+    delay(3000);
+    Serial.println(status);
   }
   Serial.println("Completed void setup().");
   Serial.println("");
@@ -147,40 +161,25 @@ int takeSample(int sensor) {
 }
 String takeMeasurement(String setting) {
   String data = "";
-  Serial.print("Measuring the ");
-  Serial.print(setting);
-  Serial.println(" air.");
   setValves(setting);
-  Serial.print("Set valves for ");
-  Serial.print(setting);
-  Serial.println(" air.");
-  Serial.println("");
-  Serial.println("Please wait the number of seconds specified by delayWhileChangingAir.");
   //***Turn on vacuum pump?
   delay(1000 * delayWhileChangingAir); //1000 milliseconds * x seconds
   //***Turn off vacuum pump?
-  Serial.println("Air changed, starting to take measurements.");
   sumValuesSensor1 = 0; //CO sensor
   sumValuesSensor2 = 0; //VOC sensor
   sumValuesSensor3 = 0; //Humidity sensor
   sumValuesSensor4 = 0; //Temperature sensor
-  Serial.println("");
   for(int i=0; i<measurementTime; i++) {
     sumValuesSensor1 += takeSample(1); //These get the total value
     sumValuesSensor2 += takeSample(2);
     sumValuesSensor3 += takeSample(3);
     sumValuesSensor4 += takeSample(4);
-    Serial.print("Took measurement #");
-    Serial.println(i+1);
     delay(1000);
   }
-  Serial.println("");
-  Serial.println("Finished getting values. Averaging...");
   averageValue1 = ((double)sumValuesSensor1)/measurementTime; //And this divides it by 30 (it takes one sample per second, for 30 seconds)
   averageValue2 = ((double)sumValuesSensor2)/measurementTime;
   averageValue3 = ((double)sumValuesSensor3)/measurementTime;
   averageValue4 = ((double)sumValuesSensor4)/measurementTime;
-  Serial.println("Putting data into dataString");
   data += String(averageValue1);
   data += ",";
   data += String(averageValue2);
@@ -189,8 +188,6 @@ String takeMeasurement(String setting) {
   data += ",";
   data += String(averageValue4);
   data += ",";
-  Serial.println("Finished putting data into dataString.");
   Serial.println(data);
-  Serial.println("");
   return data;
 }
