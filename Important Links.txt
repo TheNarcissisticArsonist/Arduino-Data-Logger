@@ -18,3 +18,6 @@ I2C library
 
 http://www.arduino.cc/en/Tutorial/UdpNTPClient
 Get time from government server
+
+http://tronixstuff.com/2010/10/20/tutorial-arduino-and-the-i2c-bus/
+Tutorial on I2C for arduino
