@@ -3,6 +3,7 @@
 #include <SD.h>
 #include <SPI.h>
 #include <WiFi.h>
+#include <WiFiUdp.h>
 
 const int valve1 = 1; //Valve one is the valve closest to the sensor array, inside of valves two and three
 const int valve2 = 2; //Valve two is the valve that chooses between "Room Air" and "Zero Air"
@@ -46,8 +47,11 @@ String dataString;
 char ssid[] = "RedSox2";
 char pass[] = "fenway1999";
 int status = WL_IDLE_STATUS;
-char server[] = "time.nist.gov";
-WiFiClient client;
+unsigned int localPort = 2390;
+IPAddress timeServer(129, 6, 15, 30);
+const int NTP_PACKET_SIZE = 48;
+byte packetBuffer[NTP_PACKET_SIZE];
+WiFiUDP Udp;
 
 void setup() {
   Serial.begin(9600);
@@ -74,6 +78,8 @@ void setup() {
     delay(3000);
     Serial.println(status);
   }
+  Serial.println("Connecting UDP.");
+  Udp.begin(localPort);
   Serial.println("Completed void setup().");
   Serial.println("");
   Serial.println("");
@@ -90,20 +96,20 @@ void loop() {
   dataFile.print(takeMeasurement("room"));
   dataFile.flush();
 
-  //Somehow get date and time and put it into the file. Use HTTP?
-  //Date time format for the file:
-  //month,day,year,hour (military), minute, second, [millisecond?]
+  sendNTPpacket(timeServer);
+  delay(1000);
+  Serial.println(UDP.parsePacket());
+  if(UDP.parsePacket()) {
+    Serial.println("Packet received!");
+    Udp.read(packetBuffer, NTP_PACKET_SIZE);
+    unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
+    unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
+    unsigned long secsSince1900 = highWord << 16 | lowWord;
+    Serial.println(secsSince1900);
+  }
 
-  //Dummy date data (hey, that's alliterative!)
-  dataFile.print("1,"); //month
-  dataFile.print("2,"); //day
-  dataFile.print("2015,"); //year
-  dataFile.print("16,"); //hour
-  dataFile.print("30,"); //minute
-  dataFile.print("10,"); //second
-  dataFile.print("500"); //millisecond
-  dataFile.flush();
-
+  /*dataFile.print(dateString);
+  dataFile.flush();*/
   dataFile.println("");
   dataFile.flush();
   dataFile.close();
@@ -190,4 +196,32 @@ String takeMeasurement(String setting) {
   data += ",";
   Serial.println(data);
   return data;
+}
+unsigned long sendNTPpacket(IPAddress& address) {
+  //Serial.println("1");
+  // set all bytes in the buffer to 0
+  memset(packetBuffer, 0, NTP_PACKET_SIZE);
+  // Initialize values needed to form NTP request
+  // (see URL above for details on the packets)
+  //Serial.println("2");
+  packetBuffer[0] = 0b11100011;   // LI, Version, Mode
+  packetBuffer[1] = 0;     // Stratum, or type of clock
+  packetBuffer[2] = 6;     // Polling Interval
+  packetBuffer[3] = 0xEC;  // Peer Clock Precision
+  // 8 bytes of zero for Root Delay & Root Dispersion
+  packetBuffer[12]  = 49;
+  packetBuffer[13]  = 0x4E;
+  packetBuffer[14]  = 49;
+  packetBuffer[15]  = 52;
+
+  //Serial.println("3");
+
+  // all NTP fields have been given values, now
+  // you can send a packet requesting a timestamp:
+  Udp.beginPacket(address, 123); //NTP requests are to port 123
+  //Serial.println("4");
+  Udp.write(packetBuffer, NTP_PACKET_SIZE);
+  //Serial.println("5");
+  Udp.endPacket();
+  //Serial.println("6");
 }
