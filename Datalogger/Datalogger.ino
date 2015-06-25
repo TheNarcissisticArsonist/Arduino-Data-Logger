@@ -78,7 +78,7 @@ void setup() {
     delay(3000);
     Serial.println(status);
   }
-  Serial.println("Connecting UDP.");
+  Serial.println("Connecting Udp.");
   Udp.begin(localPort);
   Serial.println("Completed void setup().");
   Serial.println("");
@@ -98,8 +98,8 @@ void loop() {
 
   sendNTPpacket(timeServer);
   delay(1000);
-  Serial.println(UDP.parsePacket());
-  if(UDP.parsePacket()) {
+  Serial.println(Udp.parsePacket());
+  if(Udp.parsePacket()) {
     Serial.println("Packet received!");
     Udp.read(packetBuffer, NTP_PACKET_SIZE);
     unsigned long highWord = word(packetBuffer[40], packetBuffer[41]);
