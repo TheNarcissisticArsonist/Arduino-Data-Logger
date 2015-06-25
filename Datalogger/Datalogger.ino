@@ -48,7 +48,7 @@ char ssid[] = "RedSox2";
 char pass[] = "fenway1999";
 int status = WL_IDLE_STATUS;
 unsigned int localPort = 2390;
-IPAddress timeServer(129, 6, 15, 30);
+IPAddress timeServer(64, 113, 32, 5);
 const int NTP_PACKET_SIZE = 48;
 byte packetBuffer[NTP_PACKET_SIZE];
 WiFiUDP Udp;
