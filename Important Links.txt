@@ -15,3 +15,6 @@ Date/time servers for the US government
 
 https://www.arduino.cc/en/Reference/Wire
 I2C library
+
+http://www.arduino.cc/en/Tutorial/UdpNTPClient
+Get time from government server
