@@ -41,7 +41,7 @@ File dataFile;
 
 //Used later.
 //See void loop() for more info
-String dataString;
+unsigned long dataString;
 
 //Stuff used for the wifi connection
 char ssid[] = "RedSox2";
@@ -106,10 +106,10 @@ void loop() {
     unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
     unsigned long secsSince1900 = highWord << 16 | lowWord;
     Serial.println(secsSince1900);
+    dataFile.print(secsSince1900);
+    dataFile.flush();
   }
 
-  /*dataFile.print(dateString);
-  dataFile.flush();*/
   dataFile.println("");
   dataFile.flush();
   dataFile.close();
