@@ -21,3 +21,6 @@ Get time from government server
 
 http://tronixstuff.com/2010/10/20/tutorial-arduino-and-the-i2c-bus/
 Tutorial on I2C for arduino
+
+http://doc.ntp.org/4.1.2/leap.htm
+Info on NTP/UDP to UNIX time
