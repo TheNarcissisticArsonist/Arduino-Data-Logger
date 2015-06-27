@@ -106,7 +106,11 @@ void loop() {
     unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);
     unsigned long secsSince1900 = highWord << 16 | lowWord;
     Serial.println(secsSince1900);
+    unsigned long unixTime = secsSince1900 - 2208988800UL;
+    Serial.println(unixTime);
     dataFile.print(secsSince1900);
+    dataFile.print(",");
+    dataFile.print(unixTime);
     dataFile.flush();
   }
 
