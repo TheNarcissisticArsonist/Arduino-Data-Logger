@@ -24,3 +24,6 @@ Tutorial on I2C for arduino
 
 http://www.epochconverter.com/
 Convert UNIX to readable time
+
+http://playground.arduino.cc/Main/I2cScanner
+Scan for I2C devices
