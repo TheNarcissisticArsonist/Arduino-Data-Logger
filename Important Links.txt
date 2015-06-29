@@ -27,3 +27,6 @@ Convert UNIX to readable time
 
 http://playground.arduino.cc/Main/I2cScanner
 Scan for I2C devices
+
+http://sensing.honeywell.com/index.php?ci_id=142171
+I2C datasheet on the humidity/temperature sensor
