@@ -30,3 +30,6 @@ Scan for I2C devices
 
 http://sensing.honeywell.com/index.php?ci_id=142171
 I2C datasheet on the humidity/temperature sensor
+
+http://www.gammon.com.au/forum/?id=10896%20
+More I2C tutorials!
