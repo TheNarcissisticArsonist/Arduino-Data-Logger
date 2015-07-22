@@ -326,6 +326,14 @@ void loop() { //Loop for all eternity
       boolean lostContact = true;
     }
   }
+
+  /*
+  -----Write boolean sent to DATA.csv-----
+  */
+  dataFile.print(sent);
+  dataFile.println(); //Finally finish the line of data
+  dataFile.flush();
+  dataFile.close();
 }
 unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
