@@ -1,3 +1,14 @@
+/*
+ * Code written by Thomas Cohn.
+ * Insert more personalized comments and such here...
+ */
+
+/*
+ * Do not worry!
+ * Comments are removed during compiling, and
+ * therefore have no effect on memory usage.
+ */
+
 //Include statements
 #include <SD.h>       //Used for the SD card
 #include <SPI.h>      //Used by WiFi and the SD card -- they both use SPI to communicate
@@ -19,6 +30,15 @@ void setup() { //Run once at the beginning
   pinMode(valve1, OUTPUT); //This sets the pins controlling
   pinMode(valve2, OUTPUT); //the various valves defined as
   pinMode(valve3, OUTPUT); //constants above.
+  /*
+   * Incidentally, these aren't actually directly
+   * controlling the valves, but rather controlling
+   * relays that control the valves. This is because
+   * the valves require a higher voltage and current
+   * than the arduino can supply.
+   */
+
+
 }
 void loop() { //Loop for all eternity
 
