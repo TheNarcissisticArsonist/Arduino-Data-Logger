@@ -21,10 +21,10 @@
 const int systemId = 12345; //This is the system ID. It's used a lot on the server
 const String key = "INSERT KEY HERE"; //This is the key used to access the database. Shhhh! It's a secret!
 
-const char ssid[] = "RedSox2";    //This is my WiFi network name and password.
-const char pass[] = "fenway1999"; //These will need to be changed by location.
-//const char key[] = "";
-//const int keyIndex = 0;
+char ssid[] = "RedSox2";    //This is my WiFi network name and password.
+char pass[] = "fenway1999"; //These will need to be changed by location.
+//char key[] = "";
+//int keyIndex = 0;
 /* --WiFi Instructions
  * Open network: Only SSID is needed. Set const int wifiType to 0
  * WPA2 personal network: SSID and password are needed. Set const int wifiType to 1
@@ -33,7 +33,7 @@ const char pass[] = "fenway1999"; //These will need to be changed by location.
  */
 const int wifiType = 1;
 
-const localPort = 2390; //This is used by UDP for NTP.
+const int localPort = 2390; //This is used by UDP for NTP.
 /*
 -----END UNIQUE VALUES-----
 */
@@ -111,9 +111,11 @@ void setup() { //Run once at the beginning
       case 1: //WPA2 personal network
         status = WiFi.begin(ssid, pass);
         break;
-      case 2: //WEP network
+      /*case 2: //WEP network
         status = WiFi.begin(ssid, keyIndex, key);
-        break;
+        break;*/
+      //Keep that last one commented unless you're using WEP.
+      //Compile errors... BEWARE
      }
      delay(3000); //Wait 3 seconds before trying again
    }
