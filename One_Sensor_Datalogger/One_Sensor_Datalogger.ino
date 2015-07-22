@@ -11,9 +11,12 @@ const int valve1 = 1; //The valve that switches between _____ (on) and _____ (of
 const int valve2 = 2; //The valve that switches between _____ (on) and _____ (off)
 const int valve3 = 3; //The valve that switches between _____ (on) and _____ (off)
 
-void setup() {
-
-}
-void loop() {
+void setup() { //Run once at the beginning
+  Serial.begin(9600); //The serial statement is used primarily for debugging.
+                      //Throughout the code, you may see statements such as Serial.print and Serial.println
+                      //These are simply messages being printed out to the computer connected to the Arduino
   
+}
+void loop() { //Loop for all eternity
+
 }
