@@ -38,7 +38,25 @@ void setup() { //Run once at the beginning
    * than the arduino can supply.
    */
 
-
+   if(SD.begin(4)) { //This starts up Arduino communication with the SD card on pin 4.
+                     //Pin 4 is standard for the Arduino Uno Rev 3
+                     //If successful, it returns true, allowing this conditional to work
+     Serial.println("SD card connected through pin 4.");
+   }
+   else {
+     Serial.println("ERROR: Could not connect to SD card.");
+     while(true); //This effectively stops the Arduino
+     /*
+      * This is an unusual piece of code to find in most languages.
+      * However, an Arduino can never truly "stop" -- it must always.
+      * be doing something. Stopping a program is important if there's
+      * a problem, as this prevents anything further from breaking and
+      * gives the programmer a chance to fix the problem.
+      *
+      * This is the closest way you can come to stopping an Arduino
+      * without literally unplugging it.
+      */
+   }
 }
 void loop() { //Loop for all eternity
 
