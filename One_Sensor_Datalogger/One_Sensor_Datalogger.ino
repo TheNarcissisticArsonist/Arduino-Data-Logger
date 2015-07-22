@@ -79,6 +79,9 @@ void configureValves(int configuration) {
   //3 is inner air
   //4 is room air
 
+  Serial.print("Setting valves to configuration ");
+  Serial.println(configuration);
+
   /***** The wrong valves are being turned on and off here. *****/
   switch(configuration) { //Switch statements work similar to if/elseif/elseif/... statements
     case 1:
@@ -190,6 +193,7 @@ void setup() { //Run once at the beginning
      }
      delay(3000); //Wait 3 seconds before trying again
    }
+   Serial.println("Wifi is connected.");
 
    /*
    -----UDP (Time)-----
@@ -203,7 +207,7 @@ void setup() { //Run once at the beginning
 void loop() { //Loop for all eternity
   double data[4] = {1023, 1023, 1023, 1023};
 
-  for(int i=1; i<=4; ++i) {
+  for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
     configureValves(i);
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
