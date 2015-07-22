@@ -44,8 +44,9 @@ const int systemPurge = 5; //This is the amount of time needed after a valve
                            //configuration is changed before taking measurements.
 
 const int sensor = 0; //The analog pin (has an A in front of it) that the sensor is plugged in to
+
 const int sensorMinValue = 0;     //Minimum and maximum expected analog values for the sensor
-const int sensorMaxValue = 1023;
+const int sensorMaxValue = 1023;  //These vary by the individual sensor
 /*
 -----END UNIQUE VALUES-----
 */
@@ -272,11 +273,11 @@ void loop() { //Loop for all eternity
   /*
   -----Write Data and Timestamp to File-----
   */
-  dataFile = SD.open("DATA.csv", FILE_WRITE);
-  for(int i=0; i<3; ++i) {
-    dataFile.print(nicerData[i]);
-    dataFile.print(",");
-    dataFile.flush();
+  dataFile = SD.open("DATA.csv", FILE_WRITE); //Open DATA.csv, and get ready to write to the end of it
+  for(int i=0; i<3; ++i) {        //Write all 3 items in nicerData[]
+    dataFile.print(nicerData[i]); //println isn't used because this is just one line of data.
+    dataFile.print(",");          //.csv stands for comma-separated-values.
+    dataFile.flush();             //This saves the file
   }
   dataFile.print(timeStamp);
   dataFile.print(",");
