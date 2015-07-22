@@ -228,7 +228,8 @@ void loop() { //Loop for all eternity
   boolean sensorError = false;
   for(int i=0; i<4; ++i) {
     if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
-      sensorError = true;
+      sensorError = true; //If this data entry is larger than the max value or
+                          //smaller than the minimum value, flag an error
     }
   }
 
