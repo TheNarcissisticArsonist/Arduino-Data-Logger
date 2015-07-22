@@ -52,6 +52,20 @@ const int NTP_PACKET_SIZE = 48; //This is the size of a single NTP packet
 const int localPort = 2390; //This is used by UDP for NTP.
 byte packetBuffer[NTP_PACKET_SIZE]; //Another thing used by UDP for NTP.
 
+int zeroOffset;
+/*
+ * Craig gave me a great explanation for this. Basically, there's a slope that compares
+ * some voltage value to a value on the sensor (in this case, ppb). However, no two
+ * sensors are the same, and this leads to some problems. Due to their idiosyncrasies,
+ * each sensor is slightly offset from that comparison slope by a changing number. This
+ * value is grabbed from über-filtered air guarunteed to have none of whatever is being
+ * sensed (VOCs), and then subtracted from further readings to remove the offset and
+ * facilitate converting a 10 bit integer to a useable value.
+ *
+ * TLDR: We need to find what the actual zero value on the sensor is and base our
+ * conversions off of that.
+ */
+
 void setup() { //Run once at the beginning
   Serial.begin(9600); //The serial statement is used primarily for debugging.
                       //Throughout the code, you may see statements such as Serial.print and Serial.println
