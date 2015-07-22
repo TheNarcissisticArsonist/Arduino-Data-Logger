@@ -315,6 +315,7 @@ void loop() { //Loop for all eternity
       Serial.print("Request: ");
       Serial.println(request);
 
+      client.stop();
       client.println(request);
       client.println("Connection: close"); //Close the connection when done
       client.println();
