@@ -206,7 +206,7 @@ void setup() { //Run once at the beginning
 }
 void loop() { //Loop for all eternity
   /*
-  -----Take the measurements-----
+  -----Take the Measurements-----
   */
   Serial.println("Taking measurements.");
   double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
@@ -218,7 +218,7 @@ void loop() { //Loop for all eternity
   }
 
   /*
-  -----Refine the data-----
+  -----Refine the Data-----
   */
   double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
   Serial.println("Refining data.");
