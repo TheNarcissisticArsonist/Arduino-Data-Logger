@@ -226,4 +226,60 @@ void loop() { //Loop for all eternity
     nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
     Serial.println(nicerData[i]);
   }
+
+  /*
+  -----Get Timestamp-----
+  */
+  unsigned long timeStamp;
+  Serial.println("Getting timestamp.");
+  sendNTPpacket(timeServer);  //The function is located below the main loop.
+                              //I don't fully understand how it works, so it's
+                              //not commented. Just know that it grabs the time
+                              //from a government server.
+  delay(1000);
+  if(Udp.parsePacket()) {
+    Serial.println("Received packet.");
+    Udp.read(packetBuffer, NTP_PACKET_SIZE); //This grabs the UDP data
+    unsigned long highWord = word(packetBuffer[40], packetBuffer[41]); //These move the data into a
+    unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);  //single unsigned long.
+    unsigned long secsSince1900 = highWord << 16 | lowWord;
+    Serial.print("Seconds since 1900: ");
+    Serial.println(secsSince1900);
+    unsigned long unixTime = secsSince1900 - 2208988800UL;
+    Serial.print("Seconds since 1970 (unix time): ");
+    Serial.println(unixTime);
+    timeStamp = unixTime;
+  }
+  else {
+    Serial.println("ERROR: Problem with UDP.");
+    timeStamp = 0;
+  }
+}
+unsigned long sendNTPpacket(IPAddress& address) {
+  //Serial.println("1");
+  // set all bytes in the buffer to 0
+  memset(packetBuffer, 0, NTP_PACKET_SIZE);
+  // Initialize values needed to form NTP request
+  // (see URL above for details on the packets)
+  //Serial.println("2");
+  packetBuffer[0] = 0b11100011;   // LI, Version, Mode
+  packetBuffer[1] = 0;     // Stratum, or type of clock
+  packetBuffer[2] = 6;     // Polling Interval
+  packetBuffer[3] = 0xEC;  // Peer Clock Precision
+  // 8 bytes of zero for Root Delay & Root Dispersion
+  packetBuffer[12]  = 49;
+  packetBuffer[13]  = 0x4E;
+  packetBuffer[14]  = 49;
+  packetBuffer[15]  = 52;
+
+  //Serial.println("3");
+
+  // all NTP fields have been given values, now
+  // you can send a packet requesting a timestamp:
+  Udp.beginPacket(address, 123); //NTP requests are to port 123
+  //Serial.println("4");
+  Udp.write(packetBuffer, NTP_PACKET_SIZE);
+  //Serial.println("5");
+  Udp.endPacket();
+  //Serial.println("6");
 }
