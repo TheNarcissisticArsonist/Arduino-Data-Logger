@@ -301,13 +301,13 @@ void loop() { //Loop for all eternity
   /*
   -----Send Data to the Server-----
   */
-  Serial.println("")
+  Serial.println("Sending data to server.");
   if(status != WL_CONNECTED) {    //If not connected, don't continue.
     boolean sent = false;         //Tag the line of data as not sent
     boolean lostContact = true;   //and make a note to go back and resend it.
   }
   else {
-    if(client.connect(server, 80)) {
+    if(client.connect(dataServer, 80)) {
       String request = "GET " + path + "?key=" + key + "&id=" + systemId + "&data1=" + nicerData[0] + "&data2=" + nicerData[1] + "&data3=" + nicerData[2] + "&time=" + timeStamp + "&sensorError=" + sensorError;
       //This long string should look something like the following:
       //GET /~Tommy/receive.php?key=secretPassword&id=12345&data1=1000&data2=500&data3=250&time=1234567890&sensorError=false
