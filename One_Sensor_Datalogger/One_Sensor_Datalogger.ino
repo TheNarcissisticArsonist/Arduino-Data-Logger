@@ -44,6 +44,8 @@ const int systemPurge = 5; //This is the amount of time needed after a valve
                            //configuration is changed before taking measurements.
 
 const int sensor = 0; //The analog pin (has an A in front of it) that the sensor is plugged in to
+const int sensorMinValue = 0;
+const int sensorMaxValue = 1023;
 /*
 -----END UNIQUE VALUES-----
 */
@@ -72,6 +74,8 @@ double zeroOffset = 0;
  * TLDR: We need to find what the actual zero value on the sensor is and base our
  * conversions off of that.
  */
+
+File dataFile; //An instance of the file class, used to write the data to the SD card.
 
 void configureValves(int configuration) {
   //1 is zero air
@@ -254,6 +258,18 @@ void loop() { //Loop for all eternity
     Serial.println("ERROR: Problem with UDP.");
     timeStamp = 0;
   }
+
+  /*
+  -----Write Data and Timestamp to File-----
+  */
+  dataFile = SD.open("DATA.csv", FILE_WRITE);
+  for(int i=0; i<3; ++i) {
+    dataFile.print(nicerData[i]);
+    dataFile.print(",");
+    dataFile.flush();
+  }
+  dataFile.print(timeStamp);
+  dataFile.print(",");
 }
 unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
