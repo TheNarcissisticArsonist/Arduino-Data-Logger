@@ -66,6 +66,42 @@ int zeroOffset;
  * conversions off of that.
  */
 
+void configureValves(int configuration) {
+  //1 is zero air
+  //2 is finished air
+  //3 is inner air
+  //4 is room air
+
+  /***** The wrong valves are being turned on and off here. *****/
+  switch(configuration) { //Switch statements work similar to if/elseif/elseif/... statements
+    case 1:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve2, LOW);
+      digitalWrite(valve3, HIGH);
+      break;
+    case 2:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve2, LOW);
+      digitalWrite(valve3, HIGH);
+      break;
+    case 3:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
+      digitalWrite(valve1, HIGH);
+      break;
+    case 4:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
+      digitalWrite(valve1, HIGH);
+      break;
+    default:
+      Serial.print(configuration);
+      Serial.println(" is not a valid configuration for valves!");
+      while(true);
+      break;
+  }
+}
+
 void setup() { //Run once at the beginning
   Serial.begin(9600); //The serial statement is used primarily for debugging.
                       //Throughout the code, you may see statements such as Serial.print and Serial.println
