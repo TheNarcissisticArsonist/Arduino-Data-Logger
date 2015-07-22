@@ -31,8 +31,9 @@ const char pass[] = "fenway1999"; //These will need to be changed by location.
  * WEP networks: SSID, key, and key index are needed. Set const int wifiType to 2
  * All other networks are incompatible with Arduino.
  */
- const int wifiType = 1;
+const int wifiType = 1;
 
+const localPort = 2390; //This is used by UDP for NTP.
 /*
 -----END UNIQUE VALUES-----
 */
@@ -43,6 +44,7 @@ const int valve3 = 3; //The pin for the valve that switches between _____ (on) a
 
 int status = WL_IDLE_STATUS; //This variable is used to get the status of the Arduino's WiFi connection
 
+WiFiUDP Udp;
 
 void setup() { //Run once at the beginning
   Serial.begin(9600); //The serial statement is used primarily for debugging.
@@ -115,6 +117,15 @@ void setup() { //Run once at the beginning
      }
      delay(3000); //Wait 3 seconds before trying again
    }
+
+   /*
+   -----UDP (Time)-----
+   */
+   Serial.println("Connecting UDP.");
+   Udp.begin(localPort);
+   Serial.println("Completed the setup function.");
+   Serial.println();
+   Serial.println();
 }
 void loop() { //Loop for all eternity
 
