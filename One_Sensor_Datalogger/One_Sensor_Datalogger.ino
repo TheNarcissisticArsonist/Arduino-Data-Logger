@@ -205,12 +205,25 @@ void setup() { //Run once at the beginning
    Serial.println();
 }
 void loop() { //Loop for all eternity
-  double data[4] = {1023, 1023, 1023, 1023};
-
+  /*
+  -----Take the measurements-----
+  */
+  Serial.println("Taking measurements.");
+  double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
   for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
     configureValves(i);
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
     Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }
+
+  /*
+  -----Refine the data-----
+  */
+  double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
+  Serial.println("Refining data.");
+  for(int i=0; i<3; ++i) {
+    nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
+    Serial.println(nicerData[i]);
   }
 }
