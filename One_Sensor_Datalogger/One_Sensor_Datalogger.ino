@@ -16,7 +16,7 @@
 #include <WiFiUdp.h>  //Used for UDP -- the protocal to get date and time
 
 /*
------THESE VALUES MUST BE CHANGED FOR EACH ARDUINO-----
+-----THESE VALUES MAY NEED TO BE CHANGED ON EACH ARDUINO-----
 */
 const int systemId = 12345; //This is the system ID. It's used a lot on the server
 const String key = "INSERT KEY HERE"; //This is the key used to access the database. Shhhh! It's a secret!
@@ -37,6 +37,13 @@ IPAddress timeServer(64, 113, 32, 5);
 //This is a US Government time server.
 //It's best to vary this. I'd pick one close by.
 //List of servers: http://tf.nist.gov/tf-cgi/servers.cgi
+
+//The following are given in seconds
+const int measureTime = 5; //This is how long the system averages its measurements.
+const int systemPurge = 5; //This is the amount of time needed after a valve
+                           //configuration is changed before taking measurements.
+
+const int sensor = 0; //The analog pin (has an A in front of it) that the sensor is plugged in to
 /*
 -----END UNIQUE VALUES-----
 */
@@ -52,7 +59,7 @@ const int NTP_PACKET_SIZE = 48; //This is the size of a single NTP packet
 const int localPort = 2390; //This is used by UDP for NTP.
 byte packetBuffer[NTP_PACKET_SIZE]; //Another thing used by UDP for NTP.
 
-int zeroOffset;
+double zeroOffset = 0;
 /*
  * Craig gave me a great explanation for this. Basically, there's a slope that compares
  * some voltage value to a value on the sensor (in this case, ppb). However, no two
@@ -100,6 +107,16 @@ void configureValves(int configuration) {
       while(true);
       break;
   }
+}
+double takeMeasurement() {
+  configureValves(1);
+  delay(1000 * systemPurge);
+  int sum = 0;
+  for(i=0; i<measureTime; ++i) {
+    sum += analogRead(sensor);
+    delay(1000);
+  }
+  return ((double)sum)/measureTime;
 }
 
 void setup() { //Run once at the beginning
