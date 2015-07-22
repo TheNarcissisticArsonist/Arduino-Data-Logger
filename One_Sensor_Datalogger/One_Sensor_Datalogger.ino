@@ -10,3 +10,10 @@ const String key = "INSERT KEY HERE"; //This is the key used to access the datab
 const int valve1 = 1; //The valve that switches between _____ (on) and _____ (off)
 const int valve2 = 2; //The valve that switches between _____ (on) and _____ (off)
 const int valve3 = 3; //The valve that switches between _____ (on) and _____ (off)
+
+void setup() {
+
+}
+void loop() {
+  
+}
