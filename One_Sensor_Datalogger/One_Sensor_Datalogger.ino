@@ -7,15 +7,18 @@
 const int systemId = 12345; //This is the system ID. It's used a lot on the server
 const String key = "INSERT KEY HERE"; //This is the key used to access the database. Shhhh! It's a secret!
 
-const int valve1 = 1; //The valve that switches between _____ (on) and _____ (off)
-const int valve2 = 2; //The valve that switches between _____ (on) and _____ (off)
-const int valve3 = 3; //The valve that switches between _____ (on) and _____ (off)
+const int valve1 = 1; //The pin for the valve that switches between _____ (on) and _____ (off)
+const int valve2 = 2; //The pin for the valve that switches between _____ (on) and _____ (off)
+const int valve3 = 3; //The pin for the valve that switches between _____ (on) and _____ (off)
 
 void setup() { //Run once at the beginning
   Serial.begin(9600); //The serial statement is used primarily for debugging.
                       //Throughout the code, you may see statements such as Serial.print and Serial.println
                       //These are simply messages being printed out to the computer connected to the Arduino
-  
+
+  pinMode(valve1, OUTPUT); //This sets the pins controlling
+  pinMode(valve2, OUTPUT); //the various valves defined as
+  pinMode(valve3, OUTPUT); //constants above.
 }
 void loop() { //Loop for all eternity
 
