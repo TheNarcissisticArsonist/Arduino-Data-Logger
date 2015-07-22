@@ -109,10 +109,8 @@ void configureValves(int configuration) {
   }
 }
 double takeMeasurement() {
-  configureValves(1);
-  delay(1000 * systemPurge);
   int sum = 0;
-  for(i=0; i<measureTime; ++i) {
+  for(int i=0; i<measureTime; ++i) {
     sum += analogRead(sensor);
     delay(1000);
   }
@@ -203,5 +201,12 @@ void setup() { //Run once at the beginning
    Serial.println();
 }
 void loop() { //Loop for all eternity
+  double data[4] = {1023, 1023, 1023, 1023};
 
+  for(int i=1; i<=4; ++i) {
+    configureValves(i);
+    delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
+    data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
+    Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }
 }
