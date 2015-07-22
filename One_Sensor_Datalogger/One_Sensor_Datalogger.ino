@@ -33,7 +33,10 @@ char pass[] = "fenway1999"; //These will need to be changed by location.
  */
 const int wifiType = 1;
 
-const int localPort = 2390; //This is used by UDP for NTP.
+IPAddress timeServer(64, 113, 32, 5);
+//This is a US Government time server.
+//It's best to vary this. I'd pick one close by.
+//List of servers: http://tf.nist.gov/tf-cgi/servers.cgi
 /*
 -----END UNIQUE VALUES-----
 */
@@ -44,7 +47,10 @@ const int valve3 = 3; //The pin for the valve that switches between _____ (on) a
 
 int status = WL_IDLE_STATUS; //This variable is used to get the status of the Arduino's WiFi connection
 
-WiFiUDP Udp;
+WiFiUDP Udp; //This initializes a UDP client. It's used to get time from a US Government server
+const int NTP_PACKET_SIZE = 48; //This is the size of a single NTP packet
+const int localPort = 2390; //This is used by UDP for NTP.
+byte packetBuffer[NTP_PACKET_SIZE]; //Another thing used by UDP for NTP.
 
 void setup() { //Run once at the beginning
   Serial.begin(9600); //The serial statement is used primarily for debugging.
