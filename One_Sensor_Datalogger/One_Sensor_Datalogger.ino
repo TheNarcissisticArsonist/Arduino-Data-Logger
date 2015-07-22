@@ -225,7 +225,7 @@ void loop() { //Loop for all eternity
   /*
   -----Test for Sensor Error
   */
-  sensorError = false;
+  boolean sensorError = false;
   for(int i=0; i<4; ++i) {
     if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
       sensorError = true;
@@ -271,7 +271,7 @@ void loop() { //Loop for all eternity
   }
 
   /*
-  -----Write Data and Timestamp to File-----
+  -----Write Data, Timestamp, and Sensor Error to File-----
   */
   dataFile = SD.open("DATA.csv", FILE_WRITE); //Open DATA.csv, and get ready to write to the end of it
   for(int i=0; i<3; ++i) {        //Write all 3 items in nicerData[]
@@ -281,6 +281,8 @@ void loop() { //Loop for all eternity
   }
   dataFile.print(timeStamp);
   dataFile.print(",");
+  dataFile.print(sensorError);
+  dataFile.flush();
 }
 unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
