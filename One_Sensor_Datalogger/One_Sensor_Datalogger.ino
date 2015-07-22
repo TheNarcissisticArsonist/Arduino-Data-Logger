@@ -44,7 +44,7 @@ const int systemPurge = 5; //This is the amount of time needed after a valve
                            //configuration is changed before taking measurements.
 
 const int sensor = 0; //The analog pin (has an A in front of it) that the sensor is plugged in to
-const int sensorMinValue = 0;
+const int sensorMinValue = 0;     //Minimum and maximum expected analog values for the sensor
 const int sensorMaxValue = 1023;
 /*
 -----END UNIQUE VALUES-----
@@ -219,6 +219,16 @@ void loop() { //Loop for all eternity
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
     Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }
+
+  /*
+  -----Test for Sensor Error
+  */
+  sensorError = false;
+  for(int i=0; i<4; ++i) {
+    if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
+      sensorError = true;
+    }
   }
 
   /*
