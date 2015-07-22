@@ -27,7 +27,7 @@ char pass[] = "fenway1999"; //These will need to be changed by location.
 //int keyIndex = 0;
 /* --WiFi Instructions
  * Open network: Only SSID is needed. Set const int wifiType to 0
- * WPA2 personal network: SSID and password are needed. Set const int wifiType to 1
+ * WPA or WPA2 personal network: SSID and password are needed. Set const int wifiType to 1
  * WEP networks: SSID, key, and key index are needed. Set const int wifiType to 2
  * All other networks are incompatible with Arduino.
  */
@@ -47,6 +47,8 @@ const int sensor = 0; //The analog pin (has an A in front of it) that the sensor
 
 const int sensorMinValue = 0;     //Minimum and maximum expected analog values for the sensor
 const int sensorMaxValue = 1023;  //These vary by the individual sensor
+
+IPAddress dataServer(67, 194, 11, 243); //This must be the numeric IP of the data server
 /*
 -----END UNIQUE VALUES-----
 */
@@ -77,6 +79,9 @@ double zeroOffset = 0;
  */
 
 File dataFile; //An instance of the file class, used to write the data to the SD card.
+
+WiFiClient client; //An instance of the WiFiClient class, used to connect to the serverside file
+String path = "/~Tommy/receive.php"; //The path to the file on the server.
 
 void configureValves(int configuration) {
   //1 is zero air
@@ -279,11 +284,46 @@ void loop() { //Loop for all eternity
     dataFile.print(nicerData[i]); //println isn't used because this is just one line of data.
     dataFile.print(",");          //.csv stands for comma-separated-values.
     dataFile.flush();             //This saves the file
+
+    Serial.print(nicerData[i]);
+    Serial.print(",");
   }
   dataFile.print(timeStamp);
   dataFile.print(",");
   dataFile.print(sensorError);
+  dataFile.print(",");
   dataFile.flush();
+
+  Serial.print(timeStamp);
+  Serial.print(",");
+  Serial.print(sensorError);
+
+  /*
+  -----Send Data to the Server-----
+  */
+  Serial.println("")
+  if(status != WL_CONNECTED) {
+    boolean sent = false;
+    boolean lostContact = true;
+  }
+  else {
+    if(client.connect(server, 80)) {
+      String request = "GET " + path + "?key=" + key + "&id=" + systemId + "&data1=" + nicerData[0] + "&data2=" + nicerData[1] + "&data3=" + nicerData[2] + "&time=" + timeStamp + "&sensorError=" + sensorError;
+
+      Serial.print("Request: ");
+      Serial.println(request);
+
+      client.println(request);
+      client.println("Connection: close");
+      client.println();
+
+      boolean sent = true;
+    }
+    else {
+      boolean sent = false;
+      boolean lostContact = true;
+    }
+  }
 }
 unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
