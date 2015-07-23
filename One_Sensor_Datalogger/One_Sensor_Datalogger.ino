@@ -176,7 +176,7 @@ void setup() { //Run once at the beginning
    /*
    -----WIFI-----
    */
-   Serial.println("Attempting to connect to WiFi");
+   /*Serial.println("Attempting to connect to WiFi");
    Serial.print("Network name: ");
    Serial.println(ssid);
    Serial.print("Password: ");
@@ -197,22 +197,22 @@ void setup() { //Run once at the beginning
         break;
       /*case 2: //WEP network
         status = WiFi.begin(ssid, keyIndex, key);
-        break;*/
+        break;*//*
       //Keep that last one commented unless you're using WEP.
       //Compile errors... BEWARE
      }
      delay(3000); //Wait 3 seconds before trying again
    }
-   Serial.println("Wifi is connected.");
+   Serial.println("Wifi is connected.");*/
 
    /*
    -----UDP (Time)-----
    */
-   Serial.println("Connecting UDP.");
+   /*Serial.println("Connecting UDP.");
    Udp.begin(localPort);
    Serial.println("Completed the setup function.");
    Serial.println();
-   Serial.println();
+   Serial.println();*/
 }
 void loop() { //Loop for all eternity
   /*
@@ -251,7 +251,7 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  unsigned long timeStamp;
+  /*unsigned long timeStamp;
   Serial.println("Getting timestamp.");
   sendNTPpacket(timeServer);  //The function is located below the main loop.
                               //I don't fully understand how it works, so it's
@@ -274,7 +274,7 @@ void loop() { //Loop for all eternity
   else {
     Serial.println("ERROR: Problem with UDP.");
     timeStamp = 0;
-  }
+  }*/
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
@@ -288,20 +288,20 @@ void loop() { //Loop for all eternity
     Serial.print(nicerData[i]);
     Serial.print(",");
   }
-  dataFile.print(timeStamp);      //Write the timestamp
-  dataFile.print(",");
+  /*dataFile.print(timeStamp);      //Write the timestamp
+  dataFile.print(",");*/
   dataFile.print(sensorError);    //Write the sensor error
   dataFile.print(",");
   dataFile.flush();
 
-  Serial.print(timeStamp);
-  Serial.print(",");
+  /*Serial.print(timeStamp);
+  Serial.print(",");*/
   Serial.print(sensorError);
 
   /*
   -----Send Data to the Server-----
   */
-  Serial.println("Sending data to server.");
+  /*Serial.println("Sending data to server.");
   if(status != WL_CONNECTED) {    //If not connected, don't continue.
     boolean sent = false;         //Tag the line of data as not sent
     boolean lostContact = true;   //and make a note to go back and resend it.
@@ -326,17 +326,17 @@ void loop() { //Loop for all eternity
       boolean sent = false;       //If not connected to the server...
       boolean lostContact = true;
     }
-  }
+  }*/
 
   /*
   -----Write boolean sent to DATA.csv-----
   */
-  dataFile.print(sent);
+  /*dataFile.print(sent);*/
   dataFile.println(); //Finally finish the line of data
   dataFile.flush();
   dataFile.close();
 }
-unsigned long sendNTPpacket(IPAddress& address) {
+/*unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
@@ -363,4 +363,4 @@ unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("5");
   Udp.endPacket();
   //Serial.println("6");
-}
+}*/
