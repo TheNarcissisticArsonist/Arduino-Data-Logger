@@ -245,6 +245,8 @@ void loop() { //Loop for all eternity
   Serial.println("Refining data.");
   for(int i=0; i<3; ++i) {
     nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
+    nicerData[i] = nicerData[i] * 5 / 1023); //Convert to volts
+    nicerData[i] = nicerData[i] * 1529.9; //Convert to ppm
     Serial.println(nicerData[i]);
   }
 
