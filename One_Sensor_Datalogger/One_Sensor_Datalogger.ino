@@ -18,7 +18,7 @@
 /*
 -----THESE VALUES MAY NEED TO BE CHANGED ON EACH ARDUINO-----
 */
-const int systemId = 12345; //This is the system ID. It's used a lot on the server
+const int systemId = 12345; //This is the system ID. It's used a lot on the server, and is unique to each sensor package
 const String key = "INSERT KEY HERE"; //This is the key used to access the database. Shhhh! It's a secret!
 
 char ssid[] = "RedSox2";    //This is my WiFi network name and password.
@@ -255,7 +255,7 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  /*unsigned long timeStamp;
+  unsigned long timeStamp;
   Serial.println("Getting timestamp.");
   sendNTPpacket(timeServer);  //The function is located below the main loop.
                               //I don't fully understand how it works, so it's
@@ -278,7 +278,7 @@ void loop() { //Loop for all eternity
   else {
     Serial.println("ERROR: Problem with UDP.");
     timeStamp = 0;
-  }*/
+  }
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
@@ -292,14 +292,14 @@ void loop() { //Loop for all eternity
     Serial.print(nicerData[i]);
     Serial.print(",");
   }
-  /*dataFile.print(timeStamp);      //Write the timestamp
-  dataFile.print(",");*/
+  dataFile.print(timeStamp);      //Write the timestamp
+  dataFile.print(",");
   dataFile.print(sensorError);    //Write the sensor error
   dataFile.print(",");
   dataFile.flush();
 
-  /*Serial.print(timeStamp);
-  Serial.print(",");*/
+  Serial.print(timeStamp);
+  Serial.print(",");
   Serial.print(sensorError);
 
   /*
@@ -340,7 +340,7 @@ void loop() { //Loop for all eternity
   dataFile.flush();
   dataFile.close();
 }
-/*unsigned long sendNTPpacket(IPAddress& address) {
+unsigned long sendNTPpacket(IPAddress& address) {
   //Serial.println("1");
   // set all bytes in the buffer to 0
   memset(packetBuffer, 0, NTP_PACKET_SIZE);
@@ -367,4 +367,4 @@ void loop() { //Loop for all eternity
   //Serial.println("5");
   Udp.endPacket();
   //Serial.println("6");
-}*/
+}
