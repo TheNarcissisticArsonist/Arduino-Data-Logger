@@ -49,6 +49,8 @@ const int sensorMinValue = 0;     //Minimum and maximum expected analog values f
 const int sensorMaxValue = 1023;  //These vary by the individual sensor
 
 IPAddress dataServer(67, 194, 11, 243); //This must be the numeric IP of the data server
+
+const double sensorSlope = 1529.9; //The slope of the VOC sensor used
 /*
 -----END UNIQUE VALUES-----
 */
@@ -246,7 +248,7 @@ void loop() { //Loop for all eternity
   for(int i=0; i<3; ++i) {
     nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
     nicerData[i] = nicerData[i] * 5 / 1023); //Convert to volts
-    nicerData[i] = nicerData[i] * 1529.9; //Convert to ppm
+    nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppm
     Serial.println(nicerData[i]);
   }
 
