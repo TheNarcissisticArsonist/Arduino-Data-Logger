@@ -178,7 +178,7 @@ void setup() { //Run once at the beginning
    /*
    -----WIFI-----
    */
-   /*Serial.println("Attempting to connect to WiFi");
+   Serial.println("Attempting to connect to WiFi");
    Serial.print("Network name: ");
    Serial.println(ssid);
    Serial.print("Password: ");
@@ -199,22 +199,22 @@ void setup() { //Run once at the beginning
         break;
       /*case 2: //WEP network
         status = WiFi.begin(ssid, keyIndex, key);
-        break;*//*
+        break;*/
       //Keep that last one commented unless you're using WEP.
       //Compile errors... BEWARE
      }
      delay(3000); //Wait 3 seconds before trying again
    }
-   Serial.println("Wifi is connected.");*/
+   Serial.println("Wifi is connected.");
 
    /*
    -----UDP (Time)-----
    */
-   /*Serial.println("Connecting UDP.");
+   Serial.println("Connecting UDP.");
    Udp.begin(localPort);
    Serial.println("Completed the setup function.");
    Serial.println();
-   Serial.println();*/
+   Serial.println();
 }
 void loop() { //Loop for all eternity
   /*
