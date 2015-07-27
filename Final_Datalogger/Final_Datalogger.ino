@@ -117,3 +117,24 @@ double takeMeasurement() {
   }
   return ((double)sum)/measureTime;
 }
+
+void setup() {
+  Serial.begin(9600); //The serial statement is used primarily for debugging.
+                      //Throughout the code, you may see statements such as Serial.print and Serial.println
+                      //These are simply messages being printed out to the computer connected to the Arduino
+
+  Serial.println(); //The serial monitor often contains some garbled messages
+  Serial.println(); //upon starting up. This simply prints a few lines so the
+  Serial.println(); //programmer knows when the actual information is coming.
+
+  pinMode(valve1, OUTPUT); //This sets the pins controlling
+  pinMode(valve2, OUTPUT); //the various valves defined as
+  pinMode(valve3, OUTPUT); //constants above.
+  /*
+   * Incidentally, these aren't actually directly
+   * controlling the valves, but rather controlling
+   * relays that control the valves. This is because
+   * the valves require a higher voltage and current
+   * than the arduino can supply.
+   */
+}
