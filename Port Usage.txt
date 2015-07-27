@@ -1,10 +1,10 @@
 1     Relay
 2     Relay
-3     Relay
-4     Wifi Shield
-5
+3     WiFi Shield
+4     Relay
+5     WiFi Shield
 6
-7     Wifi Shield
+7
 8
 9
 10    Wifi Shield
@@ -13,10 +13,10 @@
 13    Wifi Shield
 
 A0    CO
-A1    VOC
+A1
 A2
 A3
-A4    I2C
-A5    I2C
+A4
+A5
 
-Updated as of 6/25/2015
+Updated as of 7/27/2015
