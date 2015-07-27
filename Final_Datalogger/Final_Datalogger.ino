@@ -12,7 +12,8 @@
 //Include statements
 #include <SD.h>       //Used for the SD card
 #include <SPI.h>      //Used by WiFi and the SD card -- they both use SPI to communicate
-#include <WiFi.h>     //Used for WiFi connectivity
+#include <Adafruit_CC3000.h>     //Used for WiFi connectivity
+#include <ccspi.h>
 /* WARNING: WRONG WIFI LIBRARY! */
 /* Use this one instead: https://learn.adafruit.com/adafruit-cc3000-wifi/cc3000-library-software */
 
