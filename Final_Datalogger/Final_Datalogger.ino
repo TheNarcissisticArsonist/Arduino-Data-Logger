@@ -14,8 +14,6 @@
 #include <SPI.h>      //Used by WiFi and the SD card -- they both use SPI to communicate
 #include <Adafruit_CC3000.h>     //Used for WiFi connectivity
 #include <ccspi.h>
-/* WARNING: WRONG WIFI LIBRARY! */
-/* Use this one instead: https://learn.adafruit.com/adafruit-cc3000-wifi/cc3000-library-software */
 
 const int systemId = 12345;                 //The ID tag of the system
 const String key = "super secret password"  //The password to get into the server
