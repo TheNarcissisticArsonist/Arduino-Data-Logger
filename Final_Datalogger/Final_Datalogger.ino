@@ -35,7 +35,7 @@ const unsigned long dataServer = dotToNum(10, 0, 1, 8); //This is the numerical 
 const int dataPort = 80;                                //Port 80 is used for the data server
 
 const int systemId = 12345;                 //The ID tag of the system
-const String key = "super secret password"  //The password to get into the server
+const String key = "super secret password"; //The password to get into the server
 
 const int measureTime = 5;  //How long to average readings over
 const int systemPurge = 5;  //How long to clear air for next reading
@@ -66,9 +66,6 @@ double zeroOffset = 0;
  */
 
 File dataFile; //An instance of the file class, used to write the data to the SD card.
-
-WiFiClient client; //An instance of the WiFiClient class, used to connect to the serverside file
-String path = "/~Tommy/receive.php"; //The path to the file on the server.
 
 void configureValves(int configuration) {
   //1 is zero air
@@ -111,10 +108,19 @@ void configureValves(int configuration) {
 double takeMeasurement() {
   int sum = 0;
   for(int i=0; i<measureTime; ++i) {
-    sum += analogRead(sensor);
+    sum += analogRead(sensorPort);
     delay(1000);
   }
   return ((double)sum)/measureTime;
+}
+
+unsigned long dotToNum(unsigned long oct1, unsigned long oct2, unsigned long oct3, unsigned long oct4) {
+  unsigned long sum = 0;
+  sum += oct1 * 256 * 256 * 256;
+  sum += oct2 * 256 * 256;
+  sum += oct3 * 256;
+  sum += oct4;
+  return sum;
 }
 
 void setup() {
@@ -136,4 +142,8 @@ void setup() {
    * the valves require a higher voltage and current
    * than the arduino can supply.
    */
+
+   Serial.println(dataServer);
 }
+
+void loop() {}
