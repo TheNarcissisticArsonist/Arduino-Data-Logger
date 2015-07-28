@@ -15,10 +15,14 @@
 #include <Adafruit_CC3000.h>    //Used for WiFi connectivity
 #include <ccspi.h>              // ^^^^^
 
+#define ADAFRUIT_CC3000_IRQ 3
+#define ADAFRUIT_CC3000_VBAT 5
+#define ADAFRUIT_CC3000_CS 10
+
+Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ, ADAFRUIT_CC3000_VBAT, SPI_CLOCK_DIVIDER);
+
 const int systemId = 12345;                 //The ID tag of the system
 const String key = "super secret password"  //The password to get into the server
-
-
 
 const int measureTime = 5;  //How long to average readings over
 const int systemPurge = 5;  //How long to clear air for next reading
