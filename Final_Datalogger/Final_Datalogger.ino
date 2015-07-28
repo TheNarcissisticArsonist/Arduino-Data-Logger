@@ -113,8 +113,11 @@ double takeMeasurement() {
   }
   return ((double)sum)/measureTime;
 }
-
 unsigned long dotToNum(unsigned long oct1, unsigned long oct2, unsigned long oct3, unsigned long oct4) {
+  /*
+   * Each of the four "octals" I have above are one of the four numbers in an IP address
+   * I'm converting them to a single unsigned long variable
+   */
   unsigned long sum = 0;
   sum += oct1 * 256 * 256 * 256;
   sum += oct2 * 256 * 256;
@@ -142,8 +145,6 @@ void setup() {
    * the valves require a higher voltage and current
    * than the arduino can supply.
    */
-
-   Serial.println(dataServer);
 }
 
 void loop() {}
