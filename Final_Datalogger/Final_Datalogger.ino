@@ -15,11 +15,19 @@
 #include <Adafruit_CC3000.h>    //Used for WiFi connectivity
 #include <ccspi.h>              // ^^^^^
 
+//Pins used by the WiFi shield.
+//It also uses 11, 12 and 13.
+//And possibly maybe 4 and 7.
 #define ADAFRUIT_CC3000_IRQ 3
 #define ADAFRUIT_CC3000_VBAT 5
 #define ADAFRUIT_CC3000_CS 10
 
+//Create the instance of the Adafruit_CC3000 class to do all the web stuff
 Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ, ADAFRUIT_CC3000_VBAT, SPI_CLOCK_DIVIDER);
+
+char ssid[] = "RedSox2";              //This is the network name
+char pass[] = "fenway1999";           //and its password
+#define WLAN_Security WLAN_SEC_WPA2;  //and its security type
 
 const int systemId = 12345;                 //The ID tag of the system
 const String key = "super secret password"  //The password to get into the server
