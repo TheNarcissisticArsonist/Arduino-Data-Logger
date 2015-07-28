@@ -145,6 +145,26 @@ void setup() {
    * the valves require a higher voltage and current
    * than the arduino can supply.
    */
+
+   /*
+   ----- Set up the SD Card -----
+   */
+   if(!SD.begin(4)) { //If the SD card can't start on the Uno-standard pin 4...
+     Serial.println("Error! Could not connect to SD card!");
+     while(true);
+     /*
+      * This is an unusual piece of code to find in most languages.
+      * However, an Arduino can never truly "stop" -- it must always.
+      * be doing something. Stopping a program is important if there's
+      * a problem, as this prevents anything further from breaking and
+      * gives the programmer a chance to fix the problem.
+      *
+      * This is the closest way you can come to stopping an Arduino
+      * without literally unplugging it.
+      */
+   }
+   Serial.println("Connected to SD card.");
+   
 }
 
 void loop() {}
