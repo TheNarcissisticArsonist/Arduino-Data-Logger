@@ -205,5 +205,26 @@ void loop() { //Loop for all eternity
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
     Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }/*
+  -----Test for Sensor Error
+  */
+  boolean sensorError = false;
+  for(int i=0; i<4; ++i) {
+    if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
+      sensorError = true; //If this data entry is larger than the max value or
+                          //smaller than the minimum value, flag an error
+    }
+  }
+
+  /*
+  -----Refine the Data-----
+  */
+  double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
+  Serial.println("Refining data.");
+  for(int i=0; i<3; ++i) {
+    nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
+    nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
+    nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
+    Serial.println(nicerData[i]);
   }
 }
