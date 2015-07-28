@@ -171,42 +171,35 @@ void setup() {
 
   cc3000.begin(); //Start the module
 
-  Serial.println("Attempting to connect to WiFi.");
-  Serial.print("Network name: "); Serial.println(ssid);
-  Serial.print("Password: "); Serial.println(pass);
-  Serial.print("Security: "); Serial.println(WLAN_Security);
-
-  Serial.print("Connecting... ");
   if(!cc3000.connectToAP(ssid, pass, WLAN_Security)) {
     //connectToAP will keep trying until it's connected
-    Serial.println("Unable to connect!");
+    Serial.println("Unable to connect to WiFi!");
     while(true);
   }
-  Serial.println("Connected!");
+  Serial.println("Connected to WiFi!");
 
-  Serial.print("DHCP... ");
   while(!cc3000.checkDHCP()) {
     delay(100);
   }
-  Serial.println("Done!");
-  Serial.println("Setup complete.");
+  Serial.println("Set up DHCP.");
+  Serial.println("Setup complete!");
   Serial.println();
   Serial.println();
 }
-
 void loop() { //Loop for all eternity
   /*
-  -----Take the Measurements-----
+  ----- Take the Measurements -----
   */
-  Serial.println("Taking measurements.");
   double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
   for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
     configureValves(i);
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
     Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
-  }/*
-  -----Test for Sensor Error
+  }
+
+  /*
+  ----- Test for Sensor Error -----
   */
   boolean sensorError = false;
   for(int i=0; i<4; ++i) {
@@ -217,7 +210,7 @@ void loop() { //Loop for all eternity
   }
 
   /*
-  -----Refine the Data-----
+  ----- Refine the Data -----
   */
   double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
   Serial.println("Refining data.");
@@ -227,4 +220,29 @@ void loop() { //Loop for all eternity
     nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
     Serial.println(nicerData[i]);
   }
+
+  /*
+  ----- Get Timestamp -----
+  */
+  Serial.println("Getting timestamp.");
+  unsigned long ip = 0; //This is how an IP truly is -- an unsigned long
+  while(ip == 0) {
+    cc3000.getHostByName(timeServer, &ip); //The & means by reference -- it'll update the ip variable
+    delay(500); //Wait before trying again
+  }
+  cc3000.printIPdotsRev(ip); //Print out the IP in dot form
+  Serial.println();
+  Adafruit_CC3000_Client www = cc3000.connectTCP(ip, timePort); //This connects using TCP, the IP we found earlier, and port 13
+  char timeStamp[50];
+  int i = 0;
+  while(www.connected()) {
+    while(www.available()) {
+      char c = www.read();
+      Serial.print(c);
+      timeStamp[i] = c;
+      ++i;
+    }
+  }
+  Serial.println();
+  Serial.println(timeStamp);
 }
