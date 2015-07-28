@@ -25,9 +25,14 @@
 //Create the instance of the Adafruit_CC3000 class to do all the web stuff
 Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ, ADAFRUIT_CC3000_VBAT, SPI_CLOCK_DIVIDER);
 
-char ssid[] = "RedSox2";              //This is the network name
-char pass[] = "fenway1999";           //and its password
-#define WLAN_Security WLAN_SEC_WPA2;  //and its security type
+const char ssid[] = "RedSox2";              //This is the network name
+const char pass[] = "fenway1999";           //and its password
+#define WLAN_Security WLAN_SEC_WPA2;        //and its security type
+
+const char timeServer[] = "time.nist.gov";              //This is the hub server, so this doesn't need to be changed
+const int timePort = 13;                                //Port 13 is used for the time server
+const unsigned long dataServer = dotToNum(10, 0, 1, 8); //This is the numerical ip of the data server
+const int dataPort = 80;                                //Port 80 is used for the data server
 
 const int systemId = 12345;                 //The ID tag of the system
 const String key = "super secret password"  //The password to get into the server
