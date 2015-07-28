@@ -27,7 +27,7 @@ Adafruit_CC3000 cc3000 = Adafruit_CC3000(ADAFRUIT_CC3000_CS, ADAFRUIT_CC3000_IRQ
 
 const char ssid[] = "RedSox2";              //This is the network name
 const char pass[] = "fenway1999";           //and its password
-#define WLAN_Security WLAN_SEC_WPA2;        //and its security type
+#define WLAN_Security WLAN_SEC_WPA2         //and its security type
 
 const char timeServer[] = "time.nist.gov";              //This is the hub server, so this doesn't need to be changed
 const int timePort = 13;                                //Port 13 is used for the time server
@@ -162,9 +162,30 @@ void setup() {
       * This is the closest way you can come to stopping an Arduino
       * without literally unplugging it.
       */
-   }
-   Serial.println("Connected to SD card.");
-   
+  }
+  Serial.println("Connected to SD card.");
+
+  /*
+  ----- Set up WiFi -----
+  */
+  Serial.println("Attempting to connect to WiFi.");
+  Serial.print("Network name: "); Serial.println(ssid);
+  Serial.print("Password: "); Serial.println(pass);
+  Serial.print("Security: "); Serial.println(WLAN_Security);
+
+  Serial.print("Connecting... ");
+  if(!cc3000.connectToAP(ssid, pass, WLAN_Security)) {
+    //connectToAP will keep trying until it's connected
+    Serial.println("Unable to connect!");
+    while(true);
+  }
+  Serial.println("Connected!");
+
+  Serial.print("DHCP... ");
+  while(!cc3000.checkDHCP()) {
+    delay(100);
+  }
+  Serial.println("Done!");
 }
 
 void loop() {}
