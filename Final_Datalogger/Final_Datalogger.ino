@@ -168,6 +168,9 @@ void setup() {
   /*
   ----- Set up WiFi -----
   */
+
+  cc3000.begin(); //Start the module
+
   Serial.println("Attempting to connect to WiFi.");
   Serial.print("Network name: "); Serial.println(ssid);
   Serial.print("Password: "); Serial.println(pass);
