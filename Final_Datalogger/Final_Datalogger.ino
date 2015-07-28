@@ -189,6 +189,9 @@ void setup() {
     delay(100);
   }
   Serial.println("Done!");
+  Serial.println("Setup complete.");
+  Serial.println();
+  Serial.println();
 }
 
 void loop() {}
