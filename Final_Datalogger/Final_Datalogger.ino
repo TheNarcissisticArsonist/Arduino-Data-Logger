@@ -12,28 +12,13 @@
 //Include statements
 #include <SD.h>       //Used for the SD card
 #include <SPI.h>      //Used by WiFi and the SD card -- they both use SPI to communicate
-#include <Adafruit_CC3000.h>     //Used for WiFi connectivity
-#include <ccspi.h>
+#include <Adafruit_CC3000.h>    //Used for WiFi connectivity
+#include <ccspi.h>              // ^^^^^
 
 const int systemId = 12345;                 //The ID tag of the system
 const String key = "super secret password"  //The password to get into the server
 
-char ssid[] = "RedSox2";      //Network name
-char pass[] = "fenway1999";   //Password
-char key = "";                //Used for WEP
-int keyIndex = 0;             //Used for WEP
-const int wifiType = 1;
-/*
- * Open Network: only ssid is needed. Set wifiType to 0.
- * WPA or WPA2 Personal: ssid and pass are needed. Set wifiType to 1.
- * WEP: ssid, key, and keyIndex are needed. Set wifiType to 2.
- * Other networks are incompatible.
- */
 
-char timeServer[] = "time.nist.gov";  //The government time hub server
-const int timePort = 13;              //Used to connect to time.nist.gov
-IPAddress dataServer(64, 113, 32, 5); //The server to send data to
-const int dataPort = 80;              //This is the normal port used
 
 const int measureTime = 5;  //How long to average readings over
 const int systemPurge = 5;  //How long to clear air for next reading
@@ -48,8 +33,6 @@ const double sensorSlope = 1529.9; //The slope of the current VOC sensor
 const int valve1 = 1; //The pin for the valve that switches between _____ (on) and _____ (off)
 const int valve2 = 2; //The pin for the valve that switches between _____ (on) and _____ (off)
 const int valve3 = 4; //The pin for the valve that switches between _____ (on) and _____ (off)
-
-int status = WL_IDLE_STATUS; //This variable is used to get the status of the Arduino's WiFi connection
 
 double zeroOffset = 0;
 /*
