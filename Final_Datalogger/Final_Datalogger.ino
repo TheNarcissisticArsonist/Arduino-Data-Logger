@@ -245,4 +245,23 @@ void loop() { //Loop for all eternity
   }
   Serial.println();
   Serial.println(timeStamp);
+  www.close();
+
+  /*
+  ----- Write Data, Timestamp, Sensor Error to File -----
+  */
+  dataFile = SD.open("DATA.csv", FILE_WRITE); //Open DATA.csv, and get ready to write to the end of it
+  for(int i=0; i<3; ++i) {        //Write all 3 items in nicerData[]
+    dataFile.print(nicerData[i]); //println isn't used because this is just one line of data.
+    dataFile.print(",");          //.csv stands for comma-separated-values.
+    dataFile.flush();             //This saves the file
+
+    Serial.print(nicerData[i]);
+    Serial.print(",");
+  }
+  dataFile.print(timeStamp);      //Write the timestamp
+  dataFile.print(",");
+  dataFile.print(sensorError);    //Write the sensor error
+  dataFile.print(",");
+  dataFile.flush();
 }
