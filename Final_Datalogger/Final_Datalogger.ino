@@ -224,28 +224,34 @@ void loop() { //Loop for all eternity
   /*
   ----- Get Timestamp -----
   */
-  Serial.println("Getting timestamp.");
-  unsigned long ip = 0; //This is how an IP truly is -- an unsigned long
-  while(ip == 0) {
-    cc3000.getHostByName(timeServer, &ip); //The & means by reference -- it'll update the ip variable
-    delay(500); //Wait before trying again
-  }
-  cc3000.printIPdotsRev(ip); //Print out the IP in dot form
-  Serial.println();
-  Adafruit_CC3000_Client www = cc3000.connectTCP(ip, timePort); //This connects using TCP, the IP we found earlier, and port 13
-  char timeStamp[50];
-  int i = 0;
-  while(www.connected()) {
-    while(www.available()) {
-      char c = www.read();
-      Serial.print(c);
-      timeStamp[i] = c;
-      ++i;
+  if(cc3000.getStatus() 1= STATUS_DISCONNECTED) {
+    Serial.println("Getting timestamp.");
+    unsigned long ip = 0; //This is how an IP truly is -- an unsigned long
+    while(ip == 0) {
+      cc3000.getHostByName(timeServer, &ip); //The & means by reference -- it'll update the ip variable
+      delay(500); //Wait before trying again
     }
+    cc3000.printIPdotsRev(ip); //Print out the IP in dot form
+    Serial.println();
+    Adafruit_CC3000_Client www = cc3000.connectTCP(ip, timePort); //This connects using TCP, the IP we found earlier, and port 13
+    char timeStamp[50];
+    int i = 0;
+    while(www.connected()) {
+      while(www.available()) {
+        char c = www.read();
+        Serial.print(c);
+        timeStamp[i] = c;
+        ++i;
+      }
+    }
+    Serial.println();
+    Serial.println(timeStamp);
+    www.close();
   }
-  Serial.println();
-  Serial.println(timeStamp);
-  www.close();
+  else {
+    Serial.println("Lost network connection!");
+    timeStamp = "NO NETWORK CONNECTION";
+  }
 
   /*
   ----- Write Data, Timestamp, Sensor Error to File -----
@@ -264,4 +270,9 @@ void loop() { //Loop for all eternity
   dataFile.print(sensorError);    //Write the sensor error
   dataFile.print(",");
   dataFile.flush();
+
+  /*
+  ----- Send Data to Server -----
+  */
+
 }
