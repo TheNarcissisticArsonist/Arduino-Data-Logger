@@ -244,8 +244,10 @@ void loop() { //Loop for all eternity
   while(timeStamp == "") {          //This ensures that the program waits until it's received a response before trying to record it
     while(client.available()) {     //While there's more text available,
       char c = client.read();       //Read it to char c
-      Serial.write(c);              //Write it to the serial monitor
-      timeStamp += c;               //And add it to the timeStamp string
+        if(c == 10) {               //If it's not a funny newline character
+          Serial.write(c);          //Write it to the serial monitor
+          timeStamp += c;           //And add it to the timeStamp string
+        }
     }
   }
   Serial.println();
@@ -266,12 +268,12 @@ void loop() { //Loop for all eternity
   dataFile.print(timeStamp);      //Write the timestamp
   dataFile.print(",");
   dataFile.print(sensorError);    //Write the sensor error
-  dataFile.print(",");
   dataFile.flush();
 
   Serial.print(timeStamp);
   Serial.print(",");
   Serial.print(sensorError);
+
   dataFile.println(); //Finally finish the line of data
   dataFile.flush();
   dataFile.close();
