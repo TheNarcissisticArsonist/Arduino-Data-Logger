@@ -113,3 +113,11 @@ void configureValves(int configuration) {
       break;
   }
 }
+double takeMeasurement() {
+  int sum = 0;
+  for(int i=0; i<measureTime; ++i) {
+    sum += analogRead(sensor);
+    delay(1000);
+  }
+  return ((double)sum)/measureTime;
+}
