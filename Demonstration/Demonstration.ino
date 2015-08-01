@@ -241,30 +241,7 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  unsigned long timeStamp;
-  Serial.println("Getting timestamp.");
-  sendNTPpacket(timeServer);  //The function is located below the main loop.
-                              //I don't fully understand how it works, so it's
-                              //not commented. Just know that it grabs the time
-                              //from a government server.
-  delay(1000);
-  if(Udp.parsePacket()) {
-    Serial.println("Received packet.");
-    Udp.read(packetBuffer, NTP_PACKET_SIZE); //This grabs the UDP data
-    unsigned long highWord = word(packetBuffer[40], packetBuffer[41]); //These move the data into a
-    unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);  //single unsigned long.
-    unsigned long secsSince1900 = highWord << 16 | lowWord;
-    Serial.print("Seconds since 1900: ");
-    Serial.println(secsSince1900);
-    unsigned long unixTime = secsSince1900 - 2208988800UL;
-    Serial.print("Seconds since 1970 (unix time): ");
-    Serial.println(unixTime);
-    timeStamp = unixTime;
-  }
-  else {
-    Serial.println("ERROR: Problem with UDP.");
-    timeStamp = 0;
-  }
+  
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
