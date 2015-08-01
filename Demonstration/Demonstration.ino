@@ -240,7 +240,17 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  char timeStamp[50];
+  String timeStamp = "";
+  client.stop();
+  if(client.connect(timeServer, 13)) {
+    while(client.available()) {
+      char c = client.read();
+      Serial.write(c);
+      timeStamp += c;
+    }
+  }
+  Serial.println();
+  Serial.println(timeStamp);
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
