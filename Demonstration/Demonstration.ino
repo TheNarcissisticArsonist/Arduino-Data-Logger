@@ -74,3 +74,42 @@ File dataFile; //An instance of the file class, used to write the data to the SD
 
 WiFiClient client; //An instance of the WiFiClient class, used to connect to the serverside file
 String path = "/~Tommy/receive.php"; //The path to the file on the server.
+
+void configureValves(int configuration) {
+  //1 is zero air
+  //2 is finished air
+  //3 is inner air
+  //4 is room air
+
+  Serial.print("Setting valves to configuration ");
+  Serial.println(configuration);
+
+  /***** The wrong valves are being turned on and off here. *****/
+  switch(configuration) { //Switch statements work similar to if/elseif/elseif/... statements
+    case 1:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve2, LOW);
+      digitalWrite(valve3, HIGH);
+      break;
+    case 2:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve2, LOW);
+      digitalWrite(valve3, HIGH);
+      break;
+    case 3:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
+      digitalWrite(valve1, HIGH);
+      break;
+    case 4:
+      digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
+      digitalWrite(valve1, HIGH);
+      break;
+    default:
+      Serial.print(configuration);
+      Serial.println(" is not a valid configuration for valves!");
+      while(true);
+      break;
+  }
+}
