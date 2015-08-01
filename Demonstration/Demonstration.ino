@@ -42,7 +42,6 @@ const int sensor = 0; //The analog pin (has an A in front of it) that the sensor
 const int sensorMinValue = 0;     //Minimum and maximum expected analog values for the sensor
 const int sensorMaxValue = 1023;  //These vary by the individual sensor
 
-IPAddress dataServer(67, 194, 11, 243); //This must be the numeric IP of the data server
 char timeServer[] = "time.nist.gov";    //This is the hub server for the nist time servers
 
 const double sensorSlope = 1529.9; //The slope of the VOC sensor used
