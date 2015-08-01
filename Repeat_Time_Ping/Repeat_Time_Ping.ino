@@ -69,34 +69,19 @@ void loop() {
   // if there's incoming data from the net connection.
   // send it out the serial port.  This is for debugging
   // purposes only:
-  String timeStamp = "";
-  while (client.available()) {
-    char c = client.read();
-    timeStamp += c;
-  }
-  if(timeStamp != "") {
-    Serial.println(timeStamp);
-  }
-
-  // if ten seconds have passed since your last connection,
-  // then connect again and send data:
-  if (millis() - lastConnectionTime > postingInterval) {
-    httpRequest();
-  }
-
-}
-
-// this method makes a HTTP connection to the server:
-void httpRequest() {
-  // close any connection before send a new request.
-  // This will free the socket on the WiFi shield
   client.stop();
+  client.connect(server, 13);
+  String timeStamp = "";
+  while(timeStamp == "") {
+    while (client.available()) {
+      char c = client.read();
+      timeStamp += c;
+    }
+  }
+  Serial.println(timeStamp);
 
-  // if there's a successful connection:
-client.connect(server, 13);
-    lastConnectionTime = millis();
+  delay(5000);
 }
-
 
 void printWifiStatus() {
   // print the SSID of the network you're attached to:
