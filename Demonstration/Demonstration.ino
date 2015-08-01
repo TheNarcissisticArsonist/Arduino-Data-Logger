@@ -241,7 +241,7 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  
+  char timeStamp[50];
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
