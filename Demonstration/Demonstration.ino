@@ -202,57 +202,69 @@ void setup() { //Run once at the beginning
    Serial.println();
 }
 
-void takeMeasurements() {
-  for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
-    configureValves(i);
-    delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
-    data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
-    Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
-  }
-}
-void testForSensorError() {
-  for(int i=0; i<4; ++i) {
-    if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
-      sensorError = true; //If this data entry is larger than the max value or
-                          //smaller than the minimum value, flag an error
-    }
-  }
-}
-void refineData() {
-  for(int i=0; i<3; ++i) {
-    nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
-    nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
-    nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
-    Serial.println(nicerData[i]);
-  }
-}
-
 void loop() { //Loop for all eternity
   /*
   -----Take the Measurements-----
   */
   Serial.println("Taking measurements.");
   double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
-  takeMeasurements();
+  for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
+    configureValves(i);
+    delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
+    data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
+    Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }
 
   /*
   -----Test for Sensor Error
   */
   boolean sensorError = false;
-  testForSensorError();
+  for(int i=0; i<4; ++i) {
+    if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
+      sensorError = true; //If this data entry is larger than the max value or
+                          //smaller than the minimum value, flag an error
+    }
+  }
 
   /*
   -----Refine the Data-----
   */
-  Serial.println("Refining data.");
   double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
-  refineData();
+  Serial.println("Refining data.");
+  for(int i=0; i<3; ++i) {
+    nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
+    nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
+    nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
+    Serial.println(nicerData[i]);
+  }
 
   /*
   -----Get Timestamp-----
   */
-  char timeStamp[50];
-
+  unsigned long timeStamp;
+  Serial.println("Getting timestamp.");
+  sendNTPpacket(timeServer);  //The function is located below the main loop.
+                              //I don't fully understand how it works, so it's
+                              //not commented. Just know that it grabs the time
+                              //from a government server.
+  delay(1000);
+  if(Udp.parsePacket()) {
+    Serial.println("Received packet.");
+    Udp.read(packetBuffer, NTP_PACKET_SIZE); //This grabs the UDP data
+    unsigned long highWord = word(packetBuffer[40], packetBuffer[41]); //These move the data into a
+    unsigned long lowWord = word(packetBuffer[42], packetBuffer[43]);  //single unsigned long.
+    unsigned long secsSince1900 = highWord << 16 | lowWord;
+    Serial.print("Seconds since 1900: ");
+    Serial.println(secsSince1900);
+    unsigned long unixTime = secsSince1900 - 2208988800UL;
+    Serial.print("Seconds since 1970 (unix time): ");
+    Serial.println(unixTime);
+    timeStamp = unixTime;
+  }
+  else {
+    Serial.println("ERROR: Problem with UDP.");
+    timeStamp = 0;
+  }
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
