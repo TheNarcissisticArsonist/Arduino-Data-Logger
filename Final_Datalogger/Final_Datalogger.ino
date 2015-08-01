@@ -271,8 +271,5 @@ void loop() { //Loop for all eternity
   dataFile.print(",");
   dataFile.flush();
 
-  /*
-  ----- Send Data to Server -----
-  */
 
 }
