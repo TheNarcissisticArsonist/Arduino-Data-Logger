@@ -211,7 +211,6 @@ void loop() { //Loop for all eternity
     configureValves(i);
     delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
     data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
-    Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
   }
 
   /*
@@ -234,20 +233,20 @@ void loop() { //Loop for all eternity
     nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
     nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
     nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
-    Serial.println(nicerData[i]);
   }
 
   /*
   -----Get Timestamp-----
   */
-  String timeStamp = "";
   client.stop();
-  if(client.connect(timeServer, 13)) {
+  client.connect(timeServer, 13);
+  String timeStamp = "";
+  while(timeStamp == "") {
     while(client.available()) {
       char c = client.read();
       Serial.write(c);
       timeStamp += c;
-    }
+    }    
   }
   Serial.println();
   Serial.println(timeStamp);
