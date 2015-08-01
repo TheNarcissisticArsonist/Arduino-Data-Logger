@@ -196,8 +196,86 @@ void setup() { //Run once at the beginning
      delay(3000); //Wait 3 seconds before trying again
    }
    Serial.println("Wifi is connected.");
-   
+
    Serial.println("Completed the setup function.");
    Serial.println();
    Serial.println();
+}
+
+void takeMeasurements() {
+  for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
+    configureValves(i);
+    delay(1000 * systemPurge); //Clear the air out of the pipes and bring new air in to test
+    data[i-1] = takeMeasurement(); //Take the measurement and put it into the data array
+    Serial.println(data[i-1]); //i-1 is used because arrays are 0-indexed and we're starting at 1
+  }
+}
+void testForSensorError() {
+  for(int i=0; i<4; ++i) {
+    if(data[i] > sensorMaxValue || data[i] < sensorMinValue) {
+      sensorError = true; //If this data entry is larger than the max value or
+                          //smaller than the minimum value, flag an error
+    }
+  }
+}
+void refineData() {
+  for(int i=0; i<3; ++i) {
+    nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
+    nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
+    nicerData[i] = nicerData[i] * sensorSlope; //Convert to ppb
+    Serial.println(nicerData[i]);
+  }
+}
+
+void loop() { //Loop for all eternity
+  /*
+  -----Take the Measurements-----
+  */
+  Serial.println("Taking measurements.");
+  double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
+  takeMeasurements();
+
+  /*
+  -----Test for Sensor Error
+  */
+  boolean sensorError = false;
+  testForSensorError();
+
+  /*
+  -----Refine the Data-----
+  */
+  Serial.println("Refining data.");
+  double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
+  refineData();
+
+  /*
+  -----Get Timestamp-----
+  */
+  char timeStamp[50];
+
+
+  /*
+  -----Write Data, Timestamp, and Sensor Error to File-----
+  */
+  dataFile = SD.open("DATA.csv", FILE_WRITE); //Open DATA.csv, and get ready to write to the end of it
+  for(int i=0; i<3; ++i) {        //Write all 3 items in nicerData[]
+    dataFile.print(nicerData[i]); //println isn't used because this is just one line of data.
+    dataFile.print(",");          //.csv stands for comma-separated-values.
+    dataFile.flush();             //This saves the file
+
+    Serial.print(nicerData[i]);
+    Serial.print(",");
+  }
+  dataFile.print(timeStamp);      //Write the timestamp
+  dataFile.print(",");
+  dataFile.print(sensorError);    //Write the sensor error
+  dataFile.print(",");
+  dataFile.flush();
+
+  Serial.print(timeStamp);
+  Serial.print(",");
+  Serial.print(sensorError);
+  dataFile.println(); //Finally finish the line of data
+  dataFile.flush();
+  dataFile.close();
 }
