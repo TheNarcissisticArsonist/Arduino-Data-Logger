@@ -244,7 +244,7 @@ void loop() { //Loop for all eternity
   while(timeStamp == "") {          //This ensures that the program waits until it's received a response before trying to record it
     while(client.available()) {     //While there's more text available,
       char c = client.read();       //Read it to char c
-        if(c == 10) {               //If it's not a funny newline character
+        if(c != 10) {               //If it's not a funny newline character
           Serial.write(c);          //Write it to the serial monitor
           timeStamp += c;           //And add it to the timeStamp string
         }
