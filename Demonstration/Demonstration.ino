@@ -238,15 +238,15 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  client.stop();
-  client.connect(timeServer, 13);
+  client.stop();                    //Reset the client so it can make a web request
+  client.connect(timeServer, 13);   //Connect to time.nist.gov on port 13
   String timeStamp = "";
-  while(timeStamp == "") {
-    while(client.available()) {
-      char c = client.read();
-      Serial.write(c);
-      timeStamp += c;
-    }    
+  while(timeStamp == "") {          //This ensures that the program waits until it's received a response before trying to record it
+    while(client.available()) {     //While there's more text available,
+      char c = client.read();       //Read it to char c
+      Serial.write(c);              //Write it to the serial monitor
+      timeStamp += c;               //And add it to the timeStamp string
+    }
   }
   Serial.println();
   Serial.println(timeStamp);
@@ -275,4 +275,6 @@ void loop() { //Loop for all eternity
   dataFile.println(); //Finally finish the line of data
   dataFile.flush();
   dataFile.close();
+
+  Serial.println(); //This really isn't needed, but it looks better on the serial monitor
 }
