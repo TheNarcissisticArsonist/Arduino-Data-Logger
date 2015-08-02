@@ -87,18 +87,18 @@ void configureValves(int configuration) {
   switch(configuration) { //Switch statements work similar to if/elseif/elseif/... statements
     case 1:
       digitalWrite(valve1, HIGH);
-      digitalWrite(valve2, LOW);
+      digitalWrite(valve2, HIGH);
       digitalWrite(valve3, HIGH);
       break;
     case 2:
-      digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
       digitalWrite(valve2, LOW);
-      digitalWrite(valve3, HIGH);
+      digitalWrite(valve3, LOW);
       break;
     case 3:
-      digitalWrite(valve1, HIGH);
       digitalWrite(valve1, LOW);
       digitalWrite(valve1, HIGH);
+      digitalWrite(valve1, LOW);
       break;
     case 4:
       digitalWrite(valve1, HIGH);
