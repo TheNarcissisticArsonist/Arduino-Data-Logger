@@ -49,9 +49,9 @@ const double sensorSlope = 1529.9; //The slope of the VOC sensor used
 -----END UNIQUE VALUES-----
 */
 
-const int valve1 = 1; //The pin for the valve that switches between _____ (on) and _____ (off)
-const int valve2 = 2; //The pin for the valve that switches between _____ (on) and _____ (off)
-const int valve3 = 3; //The pin for the valve that switches between _____ (on) and _____ (off)
+const int valve1 = 2; //The pin for the valve that switches between _____ (on) and _____ (off)
+const int valve2 = 3; //The pin for the valve that switches between _____ (on) and _____ (off)
+const int valve3 = 5; //The pin for the valve that switches between _____ (on) and _____ (off)
 
 int status = WL_IDLE_STATUS; //This variable is used to get the status of the Arduino's WiFi connection
 
