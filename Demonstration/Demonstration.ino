@@ -80,7 +80,7 @@ void configureValves(int configuration) {
   //3 is inner air
   //4 is room air
 
-  Serial.print("Setting valves to configuration ");
+  Serial.print(F("Setting valves to configuration "));
   Serial.println(configuration);
 
   /***** The wrong valves are being turned on and off here. *****/
@@ -107,7 +107,7 @@ void configureValves(int configuration) {
       break;
     default:
       Serial.print(configuration);
-      Serial.println(" is not a valid configuration for valves!");
+      Serial.println(F(" is not a valid configuration for valves!"));
       while(true);
       break;
   }
@@ -150,10 +150,10 @@ void setup() { //Run once at the beginning
    if(SD.begin(4)) { //This starts up Arduino communication with the SD card on pin 4.
                      //Pin 4 is standard for the Arduino Uno Rev 3
                      //If successful, it returns true, allowing this conditional to work
-     Serial.println("SD card connected through pin 4.");
+     Serial.println(F("SD card connected through pin 4."));
    }
    else {
-     Serial.println("ERROR: Could not connect to SD card.");
+     Serial.println(F("ERROR: Could not connect to SD card."));
      while(true); //This effectively stops the Arduino
      /*
       * This is an unusual piece of code to find in most languages.
@@ -170,16 +170,16 @@ void setup() { //Run once at the beginning
    /*
    -----WIFI-----
    */
-   Serial.println("Attempting to connect to WiFi");
-   Serial.print("Network name: ");
+   Serial.println(F("Attempting to connect to WiFi"));
+   Serial.print(F("Network name: "));
    Serial.println(ssid);
-   Serial.print("Password: ");
+   Serial.print(F("Password: "));
    Serial.println(pass);
-   Serial.print("Network type: ");
+   Serial.print(F("Network type: "));
    Serial.println(wifiType);
    while(status != WL_CONNECTED) { //WL_CONNECTED is the status given when the WiFi is connected and all is good.
                                    //The green LED on the WiFi shield lights up when it's connected.
-     Serial.print("Not yet connected. Status: ");
+     Serial.print(F("Not yet connected. Status: "));
      Serial.println(status);
 
      switch(wifiType) {
@@ -197,9 +197,9 @@ void setup() { //Run once at the beginning
      }
      delay(3000); //Wait 3 seconds before trying again
    }
-   Serial.println("Wifi is connected.");
+   Serial.println(F("Wifi is connected."));
 
-   Serial.println("Completed the setup function.");
+   Serial.println(F("Completed the setup function."));
    Serial.println();
    Serial.println();
 }
@@ -208,7 +208,7 @@ void loop() { //Loop for all eternity
   /*
   -----Take the Measurements-----
   */
-  Serial.println("Taking measurements.");
+  Serial.println(F("Taking measurements."));
   double data[4] = {9001, 9001, 9001, 9001}; //9001 is an outlandish value, so if there's an error, it's obvious
   for(int i=1; i<=4; ++i) { //1 through 4 gets zero, finished, inner, and room
     configureValves(i);
@@ -231,7 +231,7 @@ void loop() { //Loop for all eternity
   -----Refine the Data-----
   */
   double nicerData[3] = {9001, 9001, 9001}; //It's over 9000!!!!!
-  Serial.println("Refining data.");
+  Serial.println(F("Refining data."));
   for(int i=0; i<3; ++i) {
     nicerData[i] = data[i+1]-data[0]; //Subtract the zero offset from finished, inner, and room air
     nicerData[i] = nicerData[i] * 5 / 1023; //Convert to volts
@@ -266,7 +266,7 @@ void loop() { //Loop for all eternity
     dataFile.flush();             //This saves the file
 
     Serial.print(nicerData[i]);
-    Serial.print(",");
+    Serial.print(F(","));
   }
   dataFile.print(timeStamp);      //Write the timestamp
   dataFile.print(",");
@@ -274,7 +274,7 @@ void loop() { //Loop for all eternity
   dataFile.flush();
 
   Serial.print(timeStamp);
-  Serial.print(",");
+  Serial.print(F(","));
   Serial.print(sensorError);
 
   dataFile.println(); //Finally finish the line of data
