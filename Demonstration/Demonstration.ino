@@ -72,7 +72,6 @@ double zeroOffset = 0;
 File dataFile; //An instance of the file class, used to write the data to the SD card.
 
 WiFiClient client; //An instance of the WiFiClient class, used to connect to the serverside file
-String path = "/~Tommy/receive.php"; //The path to the file on the server.
 
 void configureValves(int configuration) {
   //1 is zero air
