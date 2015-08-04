@@ -17,8 +17,6 @@
 /*
 -----THESE VALUES MAY NEED TO BE CHANGED ON EACH ARDUINO-----
 */
-const int systemId = 12345; //This is the system ID. It's used a lot on the server, and is unique to each sensor package
-const String key = "INSERT KEY HERE"; //This is the key used to access the database. Shhhh! It's a secret!
 
 char ssid[] = "RedSox2";    //This is my WiFi network name and password.
 char pass[] = "fenway1999"; //These will need to be changed by location.
