@@ -97,13 +97,13 @@ void configureValves(int configuration) {
       break;
     case 3:
       digitalWrite(valve1, LOW);
-      digitalWrite(valve1, HIGH);
-      digitalWrite(valve1, LOW);
+      digitalWrite(valve2, HIGH);
+      digitalWrite(valve3, LOW);
       break;
     case 4:
       digitalWrite(valve1, HIGH);
-      digitalWrite(valve1, LOW);
-      digitalWrite(valve1, HIGH);
+      digitalWrite(valve2, LOW);
+      digitalWrite(valve3, HIGH);
       break;
     default:
       Serial.print(configuration);
@@ -133,6 +133,9 @@ void setup() { //Run once at the beginning
   pinMode(valve1, OUTPUT); //This sets the pins controlling
   pinMode(valve2, OUTPUT); //the various valves defined as
   pinMode(valve3, OUTPUT); //constants above.
+  digitalWrite(valve1, HIGH); //This turns off all the valves to start out
+  digitalWrite(valve2, HIGH);
+  digitalWrite(valve3, HIGH);
   /*
    * Incidentally, these aren't actually directly
    * controlling the valves, but rather controlling
