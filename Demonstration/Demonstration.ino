@@ -251,6 +251,8 @@ void loop() { //Loop for all eternity
   }
   Serial.println();
   Serial.println(timeStamp);
+  Serial.print(F("Length: "));
+  Serial.println(timeStamp.length());
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
