@@ -241,8 +241,8 @@ void loop() { //Loop for all eternity
   client.connect(timeServer, 13); //Connect to time.nist.gov on port 13
   char timeStamp[50];             //The timestamp length is 49 characters, plus the null terminator
   timeStamp[0] = 'Z';             //This value gets overwritten, and the program tests that to make sure
+  int i = 0;                      //The current piece of the array being updated
   while(timeStamp[0] == 'Z') {    //it waits for the incoming data to arrive
-    int i = 0;                    //The current piece of the array being updated
     while(client.available()) {   //While there's more text available,
       char c = client.read();     //Read it to char c
       if(c != 10) {               //If it's not a funny newline character
@@ -251,8 +251,8 @@ void loop() { //Loop for all eternity
         ++i;                      //Change to the next character of timeStamp
       }
     }
-    timeStamp[i] = '\0';
   }
+  timeStamp[i] = '\0';
 
 
 
