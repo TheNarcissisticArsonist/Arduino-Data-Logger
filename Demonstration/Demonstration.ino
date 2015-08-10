@@ -252,7 +252,7 @@ void loop() { //Loop for all eternity
       }
     }
   }
-  timeStamp[i] = '\0';
+  timeStamp[i] = '\0';            //Add a null terminator to the char array
 
 
 
