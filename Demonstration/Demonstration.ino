@@ -237,7 +237,26 @@ void loop() { //Loop for all eternity
   /*
   -----Get Timestamp-----
   */
-  client.stop();                    //Reset the client so it can make a web request
+  client.stop();                  //Reset the client so it can make a web request
+  client.connect(timeServer, 13); //Connect to time.nist.gov on port 13
+  char timeStamp[50];             //The timestamp length is 49 characters, plus the null terminator
+  timeStamp[0] = 'Z';             //This value gets overwritten, and the program tests that to make sure
+  while(timeStamp[0] == 'Z') {    //it waits for the incoming data to arrive
+    int i = 0;                    //The current piece of the array being updated
+    while(client.available()) {   //While there's more text available,
+      char c = client.read();     //Read it to char c
+      if(c != 10) {               //If it's not a funny newline character
+        Serial.write(c);          //Write it to the serial monitor
+        timeStamp[i] = c;         //Put it in the timestamp string
+        ++i;                      //Change to the next character of timeStamp
+      }
+    }
+    timeStamp[i] = '\0';
+  }
+
+
+
+  /*client.stop();                    //Reset the client so it can make a web request
   client.connect(timeServer, 13);   //Connect to time.nist.gov on port 13
   String timeStamp = "";
   while(timeStamp == "") {          //This ensures that the program waits until it's received a response before trying to record it
@@ -248,11 +267,11 @@ void loop() { //Loop for all eternity
           timeStamp += c;           //And add it to the timeStamp string
         }
     }
-  }
+  }*/
   Serial.println();
   Serial.println(timeStamp);
-  Serial.print(F("Length: "));
-  Serial.println(timeStamp.length());
+  /*Serial.print(F("Length: "));
+  Serial.println(timeStamp.length());*/
 
   /*
   -----Write Data, Timestamp, and Sensor Error to File-----
